@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import * as Updates from 'expo-updates';
 
-export default function CheckUpdate() {
-    const [updateStatus, setUpdateStatus] = useState('Checking for updates...');
-  console.log(updateStatus)
-  useEffect(() => {
-    
+import { StyleSheet, Text, View } from 'react-native';
 
+export default function CheckUpdate() {
+  const [updateStatus, setUpdateStatus] = useState('Checking for updates...');
+  // console.log(updateStatus)
+  useEffect(() => {
     async function checkForUpdates() {
       try {
         const update = await Updates.checkForUpdateAsync();
@@ -20,7 +20,7 @@ export default function CheckUpdate() {
           setUpdateStatus('No updates available');
         }
       } catch (e) {
-        console.error(e);
+        
         setUpdateStatus('Error checking for updates');
       }
     }
@@ -28,5 +28,22 @@ export default function CheckUpdate() {
     checkForUpdates();
   }, []);
 
-  return updateStatus
+  return (
+    <>
+      <View style={styles.container}>
+        <Text  >
+          You are using the latest version
+        </Text>
+      </View>
+    </>
+
+  )
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

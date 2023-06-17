@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as Updates from 'expo-updates';
 
 import { StyleSheet, Text, View } from 'react-native';
+import MainNavigation from '../navigations/MainNavigation';
 
 export default function CheckUpdate() {
   const [updateStatus, setUpdateStatus] = useState('Checking for updates...');
@@ -30,20 +31,8 @@ export default function CheckUpdate() {
 
   return (
     <>
-      <View style={styles.container}>
-        <Text  >
-          You are using the latest version
-        </Text>
-      </View>
+     <MainNavigation/>
     </>
 
   )
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

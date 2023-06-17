@@ -1,6 +1,7 @@
 import React from 'react'
 import { Text, View,StyleSheet } from 'react-native'
-import colors from '../../../constant/colors';
+import colors from '../../constants/colors';
+
 
 export default function CustomPageTitle({lable}) {
   return (

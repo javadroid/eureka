@@ -21,7 +21,7 @@ export default function AppNavigation() {
   return (
     <NavigationContainer>
       <CheckUpdate/>
-      <MainNavigation/>
+      
     </NavigationContainer>
 
   )

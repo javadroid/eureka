@@ -1,21 +1,20 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native';
+import CustomPageCointainer from '../components/customComponnents/CustomPageContainer';
 
 
 export default function StudentDashboard() {
   return (
-    <View style={styles.container}>
+    <CustomPageCointainer style={styles.container}>
     <Text  >
       You are using an old version
     </Text>
-  </View>
+  </CustomPageCointainer>
   )
 }
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        
+       
     },
 });

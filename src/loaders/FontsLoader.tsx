@@ -9,16 +9,17 @@ import { useDispatch } from 'react-redux';
 import CheckUpdate from './checkUpdate';
 import * as Updates from 'expo-updates';
 import AppNavigation from '../navigations/AppNavigation';
+import { LinearGradient } from 'expo-linear-gradient';
 
 SplashScreen.preventAutoHideAsync()
-export default  function FontsLoader() {
+export default function FontsLoader() {
     const [appIsLoaded, setAppIsLoaded] = useState(false)
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
         InternetStatus(dispatch)
-        
-       
+
+
         prepareFont()
     }, [])
     const prepareFont = async () => {
@@ -37,10 +38,14 @@ export default  function FontsLoader() {
                 "regular": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-Regular.ttf"),
                 "SemiBold": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-SemiBold.ttf"),
                 "SemiBoldItalic": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-SemiBoldItalic.ttf"),
-                // "medium": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-Medium.ttf"),
-                // "mediumItalic": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-MediumItalic.ttf"),
-                // "thin": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-Thin.ttf"),
-                // "thinItalic": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-ThinItalic.ttf"),
+                
+                "interBlack": require("../../assets/fonts/Inter/Inter-Black.ttf"),
+                "interBold": require("../../assets/fonts/Inter/Inter-Bold.ttf"),
+                "interLight": require("../../assets/fonts/Inter/Inter-Light.ttf"),
+                 "interExtraLight": require("../../assets/fonts/Inter/Inter-ExtraLight.ttf"),
+                "interExtraBold": require("../../assets/fonts/Inter/Inter-ExtraBold.ttf"),
+                "interRegular": require("../../assets/fonts/Inter/Inter-Regular.ttf"),
+                "interSemiBold": require("../../assets/fonts/Inter/Inter-SemiBold.ttf"),
             })
 
 
@@ -59,22 +64,27 @@ export default  function FontsLoader() {
     },
         [appIsLoaded],
     )
+
+    const colors = [
+        'rgba(245, 187, 250, 0.29)',
+        'rgba(255, 255, 255, 0.55)',
+        'rgba(254, 249, 255, 0.987114)',
+        'rgba(255, 255, 255, 0.949964)',
+        'rgba(255, 255, 255, 0.84049)',
+        '#F7E9F8'
+    ];
     if (!appIsLoaded) {
         return null
     } else {
+
         return (
-            <SafeAreaProvider style={{ flex: 1 }} onLayout={onLayOut}>
-             <AppNavigation/>
-            </SafeAreaProvider>
+        
+                <SafeAreaProvider style={{ flex: 1 }} onLayout={onLayOut}>
+                    <AppNavigation />
+                </SafeAreaProvider>
+          
+
         )
     }
 
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});

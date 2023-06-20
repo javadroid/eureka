@@ -19,12 +19,12 @@ export default function CustomPageCointainer({edgeTop=''as any,style={},children
 
 
 
-    <LinearGradient colors={colorsLinearGradient} style={{ ...styles.container, }}
+    <LinearGradient colors={colorsLinearGradient} style={{ flex :1}}
       start={[0, 0]}
       end={[1, 1]}
       locations={[0, 0.196, 0.4543, 0.7127, 0.9711, 1.2295]}
     >
-      <SafeAreaView edges={ ['right', 'left', 'bottom',edgeTop]} style={{ ...style }}>
+      <SafeAreaView edges={ ['right', 'left', 'bottom',edgeTop]} style={{...styles.container, ...style }}>
 
         {children}
       </SafeAreaView>

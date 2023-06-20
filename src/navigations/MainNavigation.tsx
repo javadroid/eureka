@@ -5,12 +5,15 @@ import TabNavigation from './TabNavigation'
 import Login from '../screens/Login'
 import HeaderBackground from '../components/header/HeaderBackground'
 import Register from '../screens/Register'
+import Profile from '../screens/Profile'
+import fontSize from '../constants/fontSize'
+import colors from '../constants/colors'
 
 
 const Stack = createNativeStackNavigator()
 export default function MainNavigation() {
   return (
-    <Stack.Navigator initialRouteName='Login'>
+    <Stack.Navigator initialRouteName='Profile'>
       <Stack.Group screenOptions={{headerShadowVisible:false}}>
         <Stack.Screen name='Home' component={TabNavigation} options={{
           headerShown: false
@@ -22,6 +25,17 @@ export default function MainNavigation() {
         presentation: "containedModal" }}>
           <Stack.Screen name='Register' component={Register} />
         <Stack.Screen name='Login' component={Login} />
+      </Stack.Group>
+
+      <Stack.Group screenOptions={{ headerTitle:'',
+        headerTransparent:true,
+        presentation: "containedModal" }}>
+          <Stack.Screen options={{
+            headerTitle:'',
+            headerTitleAlign: 'center',
+           
+          }} name='Profile' component={Profile} />
+        
       </Stack.Group>
     </Stack.Navigator>
   )

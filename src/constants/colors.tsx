@@ -4,10 +4,14 @@ export default {
      extraLightGrey:"#ededed",
      nearlyWhite:"#f4f8f7",
      grey:"#7f8c8d",
-     textColor:"#1c1e21",
+     textColor:"#474954",
      textError:"red",
      primaryColor:"#95549B",
-     red:"#e74c3c",
+     primaryHover:'#79407E',
+     primaryInactive:'#F5BBFA',
+     black:'#292D32',
+     backgroundWhite:'#F5F5F5',
      beign:"#fef5c3",
-     errors:"#C03A13"
+     errors:"#C03A13",
+     borderColor: ' #D1D3DC',
 }

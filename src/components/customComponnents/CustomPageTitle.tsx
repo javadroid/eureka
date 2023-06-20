@@ -2,7 +2,6 @@ import React from 'react'
 import { Text, View,StyleSheet } from 'react-native'
 import colors from '../../constants/colors';
 
-
 export default function CustomPageTitle({lable}) {
   return (
     <View style={styles.container}>
@@ -16,7 +15,6 @@ const styles = StyleSheet.create({
     container: {
      marginBottom:10
     },
-  
     lable:{
       color:colors.textColor,
       fontSize:28,
@@ -24,4 +22,3 @@ const styles = StyleSheet.create({
       letterSpacing:0.3
     }
   });
-  

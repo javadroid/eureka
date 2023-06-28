@@ -2,9 +2,9 @@ import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import fontSize from '../../constants/fontSize'
 
-export default function CustomHeader({label=''}) {
+export default function CustomHeader({label='',style={}}) {
   return (
-    <Text style={styles.headerTitle}>{label}</Text>
+    <Text style={{...styles.headerTitle,...style}}>{label}</Text>
   )
 }
 

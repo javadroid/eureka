@@ -5,38 +5,73 @@ import { Ionicons } from '@expo/vector-icons';
 import StudentDashboard from '../screens/StudentDashboard';
 import Profile from '../screens/Profile';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import YearList from '../screens/pq/YearList';
+import LectureNotes from '../screens/lecture/LectureNotes';
+import ChatGPT from '../screens/chatGPT';
+import ChatList from '../screens/chat/ChatList';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ImageIconHome, ImageIconLectureNotes, ImageIconPQ } from './ImageIcon';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {  DashboardFlow, LectureNoteFlows, PQFlow } from './SideNavigation';
+import { FontAwesome } from '@expo/vector-icons';
+import TimeTable from '../screens/Timetable/TimeTable'
+import { AntDesign } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator()
+const Stack = createNativeStackNavigator()
 export default function TabNavigation() {
-  const colors = [
-    'rgba(245, 187, 250, 0.29)',
-    'rgba(255, 255, 255, 0.55)',
-    'rgba(254, 249, 255, 0.987114)',
-    'rgba(255, 255, 255, 0.949964)',
-    'rgba(255, 255, 255, 0.84049)',
-    '#F7E9F8'
-  ];
+
   return (
-    <Tab.Navigator screenOptions={{  headerShadowVisible: false,headerTransparent: false, }}>
-      <Tab.Screen options={{
-        headerTitle: 'false',
-        headerStyle:{
-          backgroundColor: 'transparent',
-          // elevation: 0,
-        },
+    <Tab.Navigator screenOptions={{
+      headerShadowVisible: false,
+      headerTransparent: true, headerTitleAlign: 'center',
+      tabBarShowLabel: false,
+      headerShown: false,
+      tabBarHideOnKeyboard: true,
+      // tabBarBackground:'red',
+      tabBarStyle: {
+        height: 50,
+       
+                // backgroundColor: 'black',
+                elevation: 2,
 
-        
-       headerBackground:()=> <LinearGradient colors={colors} style={{flex:1 }}
-      
-     />,
-     
+        // width:'100%'
+      }
 
-        tabBarIcon: ({ color, size }) => <Ionicons name="chatbubble-outline" size={size} color={color} />
-      }} name='SstudentDashboard' component={StudentDashboard} />
+    }}>
       <Tab.Screen options={{
+        headerTitle: '',
         headerShown: false,
-        tabBarIcon: ({ color, size }) => <Ionicons name="settings-outline" size={size} color={color} />
-      }} name='profile' component={Profile} />
+        tabBarIcon: ({ color, size }) => <AntDesign name="home" size={size} color={color} />
+      }} name='StudentDashboard' component={DashboardFlow} />
+
+      <Tab.Screen options={{
+
+        tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="robot-happy-outline" size={size} color={color} />
+      }} name='chatGPT' component={ChatGPT} />
+
+      <Tab.Screen options={{
+        tabBarIcon: ({ color, size }) => <ImageIconPQ />
+      }}
+        name='YearList' component={PQFlow} />
+
+      <Tab.Screen options={{
+        tabBarIcon: ({ color, size }) => <FontAwesome name="pencil-square-o" size={size} color={color}/>
+      }} name='LectureNoteFlows' component={LectureNoteFlows} />
+
+
+
+
+
+
+      <Tab.Screen options={{
+
+        tabBarIcon: ({ color, size }) => <Ionicons name="md-chatbubbles-outline" size={25} color={color} />
+      }} name='ChatList' component={ChatList} />
+
+
     </Tab.Navigator>
+
+
+
   )
 }

@@ -12,6 +12,7 @@ export default function CustomPicker({value=undefined as any,
     <Picker
     ref={pickerRef}
     selectedValue={value}
+    
     onValueChange={(itemValue: any, itemIndex: any) =>
         setValue(itemValue)
     }>

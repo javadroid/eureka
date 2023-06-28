@@ -23,11 +23,12 @@ export default function Profile({ navigation }) {
           <View style={styles.topBox}>
             <ProfileImage showEditButton={false} />
             <Text style={styles.topBoxTitle}>Smith Jessica</Text>
+            
             <View style={{ ...styles.lineDivider, }}></View>
             <Text style={styles.about}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sed mi ut mi venenatis maximus. Duis tristique accumsan.</Text>
           </View>
-          <ScrollView>
-            <View style={styles.bottomContainers}>
+          
+            <ScrollView style={styles.bottomContainers}>
             
             <BottomContainer style={{backgroundColor:'white'}} IconPage1={MaterialCommunityIcons} IconPage2={FontAwesome}
               iconName1={true?'gender-female':'gender-male'} iconName2={'user-o'} text1='Female' text2='Jessi' />
@@ -37,7 +38,7 @@ export default function Profile({ navigation }) {
               iconName1={'level-up'} iconName2={'id-card-o'} text1='100' text2='200012029' />
               <BottomContainer IconPage1={MaterialCommunityIcons} IconPage2={MaterialCommunityIcons}
               iconName1={'school-outline'} iconName2={'school-outline'} text1='Faculty of Computing' text2='Computer Science' />
-          </View>
+        
           </ScrollView>
           
        
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     fontFamily: 'interRegular',
     fontSize: fontSize.caption.fontSize,
     lineHeight: fontSize.caption.lineHeight,
-    marginBottom: 25,
+    // marginBottom: 25,
     color: 'black',
     textAlign: 'center',
     marginTop: 15,
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginHorizontal: 35,
     display: 'flex',
-
+    
 
 
   },

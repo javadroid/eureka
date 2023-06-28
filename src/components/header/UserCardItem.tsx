@@ -9,25 +9,25 @@ export default function UserCardItem({userData={} as any,onPress=undefined as an
   
     return (
     
-    <TouchableWithoutFeedback 
+    <View 
         // onPress={onPress}
     >
         <View style={styles.container}>
             <ProfileImage style={{height:30,width:30}} showEditButton={false} profileImage={userData.userProfileImage} />
             <View style={styles.textContainer}> 
-                <Text numberOfLines={1} style={styles.title}>{userData.username }</Text>
+                {/* <Text numberOfLines={1} style={styles.title}>{userData.username }</Text> */}
                 {/* <Text numberOfLines={1}  style={styles.subtitle}>{userData.matric}</Text> */}
             </View>
         </View>
-    </TouchableWithoutFeedback>
+    </View>
   )
 }
 const styles = StyleSheet.create({
     container: {
       flexDirection:'row',
       paddingVertical:7,
-      borderBottomColor:colors.extraLightGrey,
-      borderBottomWidth:1,
+      // borderBottomColor:colors.extraLightGrey,
+      // borderBottomWidth:1,
       alignItems: 'center',
       minHeight:50,
       

@@ -4,7 +4,8 @@ import { ValidationEmail, ValidationPhone, ValidationString } from '../Validatio
 export default function FormActions(inputId: any,inputValue: any) {
     if(inputId==="fullname"|| inputId==="username"|| inputId==="password"||
         inputId==="department" || inputId==="faculty"|| inputId==="gender"|| 
-        inputId==="matric"|| inputId==="dob"|| inputId==="phone"){
+        inputId==="matric"|| inputId==="dob"|| inputId==="phone"
+        || inputId==="title"|| inputId==="date" || inputId==="startTime"){
         const val=  ValidationString(inputId, inputValue)
           return (val)
         }else if(inputId==="email"){

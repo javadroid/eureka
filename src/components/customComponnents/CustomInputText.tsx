@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { Feather, FontAwesome } from '@expo/vector-icons';
-import React, { useCallback, useRef, useState } from 'react'
-import { Button, TouchableOpacity, ImageBackground, StyleSheet, Text, View, KeyboardAvoidingView, Platform, TextInput, TouchableNativeFeedback, Modal } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { Button, TouchableOpacity, ImageBackground, StyleSheet, Text, View, KeyboardAvoidingView, Platform, TextInput, TouchableNativeFeedback, Modal, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../constants/colors';
 import fontSize from '../../constants/fontSize';
@@ -30,7 +30,9 @@ export default function CustomInputText({
   pickerRef = undefined as any,
   onPress = undefined as any,
   onChangeText = undefined as any,
-  }) {
+  mode = 'date',
+  styleContainer = {},
+}) {
 
   // const [value, setvalue] = useState(initialValue)
   const [secureTextEntry, setsecureTextEntry] = useState(password)
@@ -38,6 +40,9 @@ export default function CustomInputText({
   const [value, setvalue] = useState(initialValue)
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
+  useEffect(() => {
+    datePickerVisible
+  }, [datePickerVisible])
   const onChangeTextHandler = (inputValue: string) => {
     setvalue(inputValue)
     onChangeText(id, inputValue)
@@ -58,30 +63,50 @@ export default function CustomInputText({
   }
   function openBodPicker() {
     setDatePickerVisible(true)
-}
-  const handleBod=(e, date) => {
+  }
+  const handleBod = (e, date: Date) => {
+    if (mode === 'date') {
+      setDatePickerVisible(false)
+      setvalue(date.toDateString())
+      onChangeText(id, date?.toISOString())
+    } else if (mode === 'time') {
+      setDatePickerVisible(false)
+      // console.log(date.getHours())
+      setvalue(date?.toLocaleTimeString())
+      onChangeText(id, date?.toISOString())
+    }
+
+  }
+  const onTouchCancel = () => {
     setDatePickerVisible(false)
-    setvalue(date.toLocaleDateString())
-    onChangeText('dob',date?.toLocaleDateString())        
-}
+    setvalue('')
+
+  }
+  // console.log(styleContainer)
   return (
-    <TouchableNativeFeedback onPress={pickerRef ? openPicker : onPress ? openBodPicker : () => { }}>
-      <View style={{ ...styles.container, ...style }}>
+    <Pressable style={{ ...styleContainer, }} onPress={pickerRef ? openPicker : onPress ? openBodPicker : () => { }}>
+      <View style={{ ...styles.container, }}>
         <Text style={styles.lable}>{label}</Text>
-        <View style={{ ...styles.inputContainer, borderColor: active ? colors.primaryColor : (errorText) ? colors.errors : '#fff' }}>
+        <View style={{
+          ...styles.inputContainer, ...style,
+          borderColor: active ? colors.primaryColor : (errorText) ? colors.errors : '#fff'
+          , paddingVertical: pickerRef ? 5 : 10
+        }}>
           {icon && (
             <IconPack style={styles.icon} name={iconName} size={iconSize} color={iconColor} />
           )}
-          {pickerRef && (
-            <CustomPicker setValue={onChangeTextHandler} value={value} pickerRef={pickerRef} items={items} />
 
-          )}
-          <Modal transparent={true} visible={datePickerVisible}>
+
+          {datePickerVisible && (
+
+
             <Text>
-              <RNDateTimePicker  collapsable={true} value={new Date()} onChange={handleBod} />;
+              <RNDateTimePicker mode={mode} display='spinner' onPointerCancel={onTouchCancel} onTouchCancel={onTouchCancel} collapsable={true} value={new Date()} onChange={handleBod} />;
             </Text>
+          )
 
-          </Modal >
+
+          }
 
           <TextInput onFocus={handleFocus} onBlur={handleBlur} autoCapitalize={autoCapitalize}
             keyboardType={keyboardType}
@@ -94,7 +119,10 @@ export default function CustomInputText({
             textContentType={textContentType}
             style={{ ...styles.input }} />
 
+          {pickerRef && (
+            <CustomPicker setValue={onChangeTextHandler} value={value} pickerRef={pickerRef} items={items} />
 
+          )}
 
           {password && (
             <TouchableOpacity onPress={handlesecureTextEntry} >
@@ -110,8 +138,10 @@ export default function CustomInputText({
           </View>
         )}
 
+
+
       </View>
-    </TouchableNativeFeedback>
+    </Pressable>
   )
 }
 
@@ -137,6 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.nearlyWhite,
     paddingHorizontal: 10,
     paddingVertical: 10,
+    flexShrink: 1,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',

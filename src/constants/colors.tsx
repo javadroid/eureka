@@ -5,6 +5,7 @@ export default {
      nearlyWhite:"#f4f8f7",
      grey:"#7f8c8d",
      textColor:"#474954",
+     textTitle:"#827A7A",
      textError:"red",
      primaryColor:"#95549B",
      primaryHover:'#79407E',
@@ -14,4 +15,5 @@ export default {
      beign:"#fef5c3",
      errors:"#C03A13",
      borderColor: ' #D1D3DC',
+     iconActive:'#613EEA'
 }

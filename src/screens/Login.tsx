@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import CustomPageCointainer from '../components/customComponnents/CustomPageContainer';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -10,6 +10,7 @@ import CustomKeyboardAvoidingView from '../components/customComponnents/CustomKe
 import CustomHeader from '../components/customComponnents/CustomHeader';
 import FormActions from '../utils/actions/FormActions';
 import { formReducer } from '../utils/reducers/FormReducers';
+
 
 const initialState = {
 
@@ -27,7 +28,7 @@ const initialState = {
     },
     formValid: false
   }
-export default function Login({  }) {
+export default function Login({ navigation }) {
     const [formState, dispatchFormState] = useReducer(formReducer, initialState)
     const [matric, setmatric] = useState('');
     const [password, setPassword] = useState('');
@@ -60,10 +61,10 @@ export default function Login({  }) {
                     <View style={{ marginBottom: 10 }}>
                         <Text>Forgot Password </Text>
                     </View>
-                    <CustomButtonSubmit  disabled={!formState.formValid} style={{ marginBottom: 30 }} lable='Login' />
-                    <View style={{ alignItems: 'center', }}>
+                    <CustomButtonSubmit onPress={()=>navigation.navigate('Home')}  disabled={!formState.formValid} style={{ marginBottom: 30 }} lable='Login' />
+                    <TouchableOpacity onPress={()=>navigation.navigate('Register')} style={{ alignItems: 'center', }}>
                         <Text>Don't have an account? Sign up😎 </Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 </View>
                 

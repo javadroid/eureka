@@ -53,7 +53,7 @@ export default function ProfileImage({ style = { height: 80, width: 80 },stateUs
         console.log("view profile")
     }
     return (
-        <TouchableOpacity  >
+        <View  >
 
             {isLoading?(
                 <View style={{ ...styles.loadingContainer,...style }}>
@@ -73,7 +73,7 @@ export default function ProfileImage({ style = { height: 80, width: 80 },stateUs
             )
            }
           
-        </TouchableOpacity>
+        </View>
     )
 }
 const styles = StyleSheet.create({

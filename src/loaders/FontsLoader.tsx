@@ -5,17 +5,20 @@ import * as SplashScreen from 'expo-splash-screen'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import InternetStatus from './InternetStatus';
 import { StyleSheet, Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CheckUpdate from './checkUpdate';
 import * as Updates from 'expo-updates';
 import AppNavigation from '../navigations/AppNavigation';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setUserToken, setIsAuthenticated, setUserData } from '../utils/store/userSlice';
 
 SplashScreen.preventAutoHideAsync()
 export default function FontsLoader() {
     const [appIsLoaded, setAppIsLoaded] = useState(false)
     const dispatch = useDispatch()
-
+    const isAuthenticated= useSelector((state:any)=> state.user.isAuthenticated)
+    
     useEffect(() => {
         InternetStatus(dispatch)
 
@@ -24,6 +27,10 @@ export default function FontsLoader() {
     }, [])
     const prepareFont = async () => {
         try {
+            
+                dispatch(setUserToken({userToken: JSON.parse(await AsyncStorage.getItem('userToken')) }))
+                dispatch(setIsAuthenticated({isAuthenticated: JSON.parse(await AsyncStorage.getItem('isAuthenticated')) }))
+                dispatch(setUserData({userData: JSON.parse(await AsyncStorage.getItem('userData')) }))
             await Font.loadAsync({
                 "black": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-Black.ttf"),
                 "blackItalic": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-BlackItalic.ttf"),

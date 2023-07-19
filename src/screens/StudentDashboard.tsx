@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, FlatList, Image, ImageBackground, LayoutAnimation, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Alert, Animated, FlatList, Image, ImageBackground, LayoutAnimation, ScrollView, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import CustomPageCointainer from '../components/customComponnents/CustomPageContainer';
 import { HeaderMenu } from '../components/header/HeaderMenu';
 import { useNavigation } from '@react-navigation/native';
@@ -9,22 +9,42 @@ import fontSize from '../constants/fontSize';
 import { MaterialIcons } from '@expo/vector-icons';
 import TrendingList from '../components/flat/TrendingList';
 import NewsList from '../components/flat/NewsList';
+import { addStudent, findById, profile } from '../utils/service/ApiService';
+import { AxiosError } from 'axios';
+import { async } from 'validate.js';
+import { useDispatch, useSelector } from 'react-redux';
+import setlocalRedux from '../utils/localRedux';
+import { setIsAuthenticated, setUserData } from '../utils/store/userSlice';
+import { download } from '../../assets/image/ImagesIndex';
+import { checkConnection } from '../utils/store/internetConnectionSlice';
+import InternetStatus from '../loaders/InternetStatus';
+
 export default function StudentDashboard({ navigation }) {
+  const userToken= useSelector((state:any)=> state.user.userToken)
+  const isAuthenticated= useSelector((state:any)=> state.user.isAuthenticated)
+  const userData = useSelector((state: any) => state.user.userData)
+  const dispatch = useDispatch()
   const { width, height } = useWindowDimensions();
   const [greeter, setGreeter] = useState('')
   const [timeUpdate, setTimeUpdate] = useState('')
   const [timeSecUpdate, setTimeSecUpdate] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  useEffect(() => {
+  let [userDataState, setuserDataState] = useState(userData)
+const [loading, setLoading] = useState(true)
+  
+
+ useEffect(() => {
     HandleTime()
-    // console.log(timeUpdate.split(':')[0]+':'+timeUpdate.split(':')[1]+' ' + timeUpdate.split(':')[2].substring(3,5))
-  }, [])
+   
+  }, [loading ])
+
   const HandleTime = () => {
 
     setInterval(() => {
       let now = new Date();
       let hour = now.getHours();
-      // console.log(hour)
+    
       let time = now.toLocaleTimeString()
       let HM = time.split(':')[0] + ':' + time.split(':')[1]
       let AMPM = ':' + time.split(':')[2].substring(0, 2) + ' ' + time.split(':')[2].substring(3, 5)
@@ -47,28 +67,14 @@ export default function StudentDashboard({ navigation }) {
   const animation = useRef(new Animated.Value(hideTrending ? 1 : 0)).current;
   const handleScroll = (event) => {
     const { y } = event.nativeEvent.contentOffset;
-    // const scrollThreshold = 200; // Set your desired scroll threshold here
-    // console.log(y, hideTrending)
     if (y >= 300) {
-      const toValue = hideTrending ? 0 : 1;
-
-      Animated.timing(animation, {
-        toValue,
-        duration: 300, // Set the desired animation duration
-        useNativeDriver: true, // Enable native driver for better performance
-      }).start();
-  
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setHideTrending(false);
-      // scrollViewRef.current.scrollTo({ y: 300, animated: true });
+   
     } else {
       setHideTrending(true)
     }
   };
-  const viewScale = animation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 1], // Set the desired collapsed scale
-  });
+
   const viewStyle = {
     height: hideTrending ? null : 0,
     opacity: hideTrending ? 1 : 0,
@@ -77,7 +83,7 @@ export default function StudentDashboard({ navigation }) {
   };
   return (
     <CustomPageCointainer edgeTop={'top'} style={styles.container}>
-      <HeaderMenu navigation={navigation} />
+      <HeaderMenu  navigation={navigation} />
 
 
       <View style={styles.timeTableContainer}>
@@ -95,7 +101,7 @@ export default function StudentDashboard({ navigation }) {
           </View>
 
         </View>
-        <View style={{ flex: 1, paddingLeft: 20, justifyContent: 'flex-end', paddingRight: 20, }}>
+        <View style={{ flex: 1, paddingLeft: 20, justifyContent: 'flex-end', paddingRight: 10, }}>
           <Text style={styles.currentTaskName}>{'Introduction to computer science'}</Text>
           <Text style={styles.currentTaskCode}>{'CSC 101'}</Text>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -127,19 +133,25 @@ export default function StudentDashboard({ navigation }) {
        
           <CustomHeader style={{ ...styles.headerTitle, ...{ marginTop: 10, } }} label='Trending Now' />
           <View style={viewStyle}>
-            <FlatList data={[{ img: require('../../assets/image/userImage.jpeg'), title: "Potter explains what $89m Mudryk will bring to Chelsea &..." }, {}]} horizontal showsHorizontalScrollIndicator={false} renderItem={(item) => TrendingList(width, height, item,navigation,'NewsPage',)} />
+            <FlatList data={[{ img: download, title: "Potter explains what $89m Mudryk will bring to Chelsea &..." }, {}]} horizontal showsHorizontalScrollIndicator={false} renderItem={(item) => TrendingList(width, height, item,navigation,'NewsPage',)} />
           </View>
       <CustomHeader style={{ ...styles.headerTitle, ...{ marginTop: 10, } }} label="New's Update" />
       <View style={styles.newsContainer}>
-        <FlatList ref={scrollViewRef} onScroll={handleScroll} scrollEventThrottle={16} data={[
-          { img: require('../../assets/image/userImage.jpeg'), category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
-          { img: require('../../assets/image/userImage.jpeg'), category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
-          { img: require('../../assets/image/userImage.jpeg'), category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
-          { img: require('../../assets/image/userImage.jpeg'), category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
-          { img: require('../../assets/image/userImage.jpeg'), category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() }
-        ]} showsVerticalScrollIndicator={false} renderItem={(item) => NewsList(item,navigation,'NewsPage')} />
+        <FlatList  ref={scrollViewRef} onScroll={handleScroll} scrollEventThrottle={16} data={[
+          { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
+          { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
+          { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
+          { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
+          { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() }
+        ]} showsVerticalScrollIndicator={false} 
+        renderItem={(item) => {
+          
+          return(
+            <NewsList itemData={item}navigation={navigation} navigate={'NewsPage'}/>
+         )
+         }}/>
 
-      </View>
+      </View>  
 
 
     </CustomPageCointainer>
@@ -223,7 +235,8 @@ const styles = StyleSheet.create({
     fontFamily: 'regular',
     fontSize: fontSize.caption.fontSize,
     lineHeight: fontSize.caption.lineHeight,
-    marginBottom: 5,
+    marginBottom: 9,
+    // marginTop: 10,
     color: colors.textColor
     // color:colors.,
   },
@@ -243,7 +256,7 @@ const styles = StyleSheet.create({
 
   timeTableContainer: {
     flexDirection: 'row',
-    marginTop: 60,
+    marginTop: 40,
     padding: 20,
 
     borderBottomWidth: 0.51,

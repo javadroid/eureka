@@ -10,64 +10,101 @@ import CustomKeyboardAvoidingView from '../components/customComponnents/CustomKe
 import CustomHeader from '../components/customComponnents/CustomHeader';
 import FormActions from '../utils/actions/FormActions';
 import { formReducer } from '../utils/reducers/FormReducers';
+import { addStudent, login, profile } from '../utils/service/ApiService';
+import { AxiosError } from 'axios';
+import setlocalRedux from '../utils/localRedux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsAuthenticated, setUserToken } from '../utils/store/userSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { async } from 'validate.js';
 
 
 const initialState = {
 
     inputValue: {
-   
-      matric: "",
-      
-      password: "",
-     
-  
+
+        matricNo: "",
+
+        password: "",
+
+
     },
     inputValidities: {
-        matric: false,
+        matricNo: false,
         password: false,
     },
     formValid: false
-  }
-export default function Login({ navigation }) {
+}
+export default function Login({  }) {
+    const dispatch = useDispatch()
     const [formState, dispatchFormState] = useReducer(formReducer, initialState)
-    const [matric, setmatric] = useState('');
+    const [matricNo, setmatric] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMatric, setErrorMatric] = useState<null|string>(null);
-    const [errorPassword, setErrorPassword] = useState<null|string>(null);
+    const [errorMatric, setErrorMatric] = useState<null | string>(null);
+    const [errorPassword, setErrorPassword] = useState<null | string>(null);
     const [loading, setLoading] = useState(false);
+
+    const userToken= useSelector((state:any)=> state.user.userToken)
+    const isAuthenticated= useSelector((state:any)=> state.user.isAuthenticated)
+
+    useEffect(() => {
+            if (userToken) {
+                // navigation.navigate("Home")
+                // console.log(isAuthenticated)
+            }
+        }, [userToken])
+
+       
     const onChangeTextHandler = useCallback((inputId: any, inputValue: any) => {
         const result = (FormActions(inputId, inputValue))
-        console.log(result, inputId)
+       
         dispatchFormState({ inputId, validationResult: result, inputValue })
-      }, [dispatchFormState])
-    // useEffect(() => {
-    //     navigation.setOptions({`
-    //         headerTitle: () => {
-    //             return 
-    //         }
-    //     })
-    // }, [])
+    }, [dispatchFormState])
+
+    const HandleSubmit = useCallback(async (data) => {
+        setErrorMatric("")
+        setErrorPassword("")
+        const result = await login('students', data)
+            .catch((err: AxiosError) => {
+                
+                if(err.response?.data['error']==="Not Found"){
+                    setErrorMatric("Matric Number Not Found")
+                    
+                }else if(err.response?.data['error']==="Unauthorized"){
+                    setErrorPassword("Wrong Password")
+                }else{
+                    setErrorPassword("Something went wrong")
+                }
+            });
+         // console.log("login user id",result)
+      if(result){
+         setlocalRedux({key:"userToken",data:result,dispatch,method:setUserToken})
+         setlocalRedux({key:"isAuthenticated",data:true,dispatch,method:setIsAuthenticated})
+        // navigation.navigate("Home")
+      }
+       
+    },[])
     return (
 
         <CustomKeyboardAvoidingView>
-            <CustomPageCointainer edgeTop={'top'} style={{flex:1}}>
-                <View > 
-                    <CustomHeader label='Login'/>
+            <CustomPageCointainer edgeTop={'top'} style={{ flex: 1 }}>
+                <View >
+                    <CustomHeader label='Login' />
                 </View>
                 <View style={styles.container}>
-                <View style={styles.loginContainer} >
-                    <CustomInputText id='matric' errorText={formState.inputValidities['matric']||errorMatric} initialValue={formState.inputValue['matric']} onChangeText={onChangeTextHandler} style={{ marginBottom: 30 }} label='Matric Number' />
-                    <CustomInputText  id='password' errorText={formState.inputValidities['password']||errorPassword} initialValue={formState.inputValue['password']} onChangeText={onChangeTextHandler} style={{ marginBottom: 30 }} label='Password' placeholder='******' password={true} />
-                    <View style={{ marginBottom: 10 }}>
-                        <Text>Forgot Password </Text>
+                    <View style={styles.loginContainer} >
+                        <CustomInputText id='matricNo' errorText={formState.inputValidities['matricNo'] || errorMatric} initialValue={formState.inputValue['matricNo']} onChangeText={onChangeTextHandler} style={{ marginBottom: 30 }} label='Matric Number' />
+                        <CustomInputText id='password' errorText={formState.inputValidities['password'] || errorPassword} initialValue={formState.inputValue['password']} onChangeText={onChangeTextHandler} style={{ marginBottom: 30 }} label='Password' placeholder='******' password={true} />
+                        <View style={{ marginBottom: 10 }}>
+                            <Text>Forgot Password </Text>
+                        </View>
+                        <CustomButtonSubmit onPress={()=>HandleSubmit(formState.inputValue)} disabled={!formState.formValid} style={{ marginBottom: 30 }} lable='Login' />
+                        {/* <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{ alignItems: 'center', }}>
+                            <Text>Don't have an account? Sign up😎 </Text>
+                        </TouchableOpacity> */}
                     </View>
-                    <CustomButtonSubmit onPress={()=>navigation.navigate('Home')}  disabled={!formState.formValid} style={{ marginBottom: 30 }} lable='Login' />
-                    <TouchableOpacity onPress={()=>navigation.navigate('Register')} style={{ alignItems: 'center', }}>
-                        <Text>Don't have an account? Sign up😎 </Text>
-                    </TouchableOpacity>
                 </View>
-                </View>
-                
+
 
             </CustomPageCointainer>
         </CustomKeyboardAvoidingView>
@@ -88,7 +125,7 @@ const styles = StyleSheet.create({
 
     },
     loginContainer: {
-        
+
         width: '100%',
         padding: 20
 

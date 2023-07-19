@@ -9,18 +9,65 @@ import StickyButton from '../../components/button/StickyButton'
 import FloatingButton from '../../components/button/FloatingButton'
 import GestureRecognizer from 'react-native-swipe-gestures'
 import RenderHtml from 'react-native-render-html'; 
+import { DrawerComponent } from './DrawerComponent'
+import { Feather } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 
-
+const  questions=[
+    {no:'1a',question:`<p dir="ltr" style="line-height: 2;" role="presentation">There are different perspectives from which you may develop various abstract models to represent the would-be system. Briefly discuss these four (4) perspectives and for each, mention the graphical notation associated with it. <strong>[8 Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`},
+    {no:'1b',question:`<p dir="ltr" style="line-height: 2;" role="presentation">Draw a state diagram of the control software for an automatic washing machine that has different programs for different types of clothes. <strong>[9½ Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`},
+    {no:'2a',question:`<p dir="ltr" style="line-height: 2;" role="presentation">Software architectural design is an important stage in the software development process; explicitly discuss three (3) benefits of providing a detailed design and documentation at this stage. <strong>[6 Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`},
+    {no:'2b',question:`<p dir="ltr" style="line-height: 2;" role="presentation">There are different perspectives from which you may develop various abstract models to represent the would-be system. Briefly discuss these four (4) perspectives and for each, mention the graphical notation associated with it. <strong>[8 Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`},
+    {no:'3a',question:`<p dir="ltr" style="line-height: 2;" role="presentation">Draw a state diagram of the control software for an automatic washing machine that has different programs for different types of clothes. <strong>[9½ Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`},
+    {no:'3b',question:`<p dir="ltr" style="line-height: 2;" role="presentation">Software architectural design is an important stage in the software development process; explicitly discuss three (3) benefits of providing a detailed design and documentation at this stage. <strong>[6 Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`}
+]
 export default function Questions({ navigation }) {
     const { width } = useWindowDimensions();
-    const [descHTML, setDescHTML] = useState('');
+    const [content,setContent]=useState(0)
+    const [descHTML, setDescHTML] = useState(questions[content]?.question);
     const [modalVisible, setModalVisible] = useState(false)
+    const[answerVisible, setAnswerVisible]=useState(false)
+    const [zIndex, setzIndex] = useState(false)
+    
+    const displayAnswer = () => {
+        setAnswerVisible(!answerVisible)
+    }
+    const floatingButtonItem=[
+        {IconPack:Feather,iconName:answerVisible?'eye':'eye-off',color:'white',size:24,onPress:displayAnswer},
+        {IconPack:MaterialIcons,iconName:'feedback',color:'white',size:24,onPress:displayAnswer},
+        ]
+       const  HandleGoto=() => {
+        setzIndex(!zIndex)
+        }
+
+        const   HandleSwipeLeft=(state:any)=>{
+           
+            if(content >0){
+                setContent(content-1)
+                console.log(content)
+            }
+            
+        }
+        const   HandleSwipeRight=(state:any)=>{
+            // console.log(content,' ', questions.length)
+            if(content<questions.length-1){
+                setContent(content+1)
+             
+            }
+            
+        }
 
     return (
         <>
-            {/* <StickyButton /> */}
-            <FloatingButton />
-
+            <StickyButton onPress={HandleGoto} />
+            <FloatingButton item={floatingButtonItem} />
+            <DrawerComponent zIndex={zIndex} setzIndex={setzIndex} />
             <Modal animationType='fade'
                 transparent={true}
 
@@ -56,13 +103,13 @@ export default function Questions({ navigation }) {
                 <HeaderMenu navigation={navigation} headerTitle='CSC 419' />
                 <CustomHeader style={{ ...styles.headerTitle, ...{} }} label='2019/2020 Examination' />
                 <View style={styles.questionHeader}>
-                    <Text style={styles.questionHeaderText}>20</Text>
+                    <Text style={styles.questionHeaderText}>{questions[content]?.no}</Text>
                 </View>
 
         
                     <GestureRecognizer style={{flex:1, flexDirection:'row',}}
-                        onSwipeLeft={(state) => console.log(state, "left")}
-                        onSwipeRight={(state) => console.log(state, "right")}
+                        onSwipeLeft={(state) => HandleSwipeRight(state)}
+                        onSwipeRight={(state) => HandleSwipeLeft(state)}
                     >
                         <View style={styles.displayContainer}>
                             <View style={styles.htmlBoxStyle}>
@@ -70,7 +117,7 @@ export default function Questions({ navigation }) {
                                     <RenderHtml
                                         contentWidth={width}
                                         source={{
-                                            html: descHTML
+                                            html: questions[content]?.question
                                         }}
                                         ignoredDomTags={['video']}
                                     />

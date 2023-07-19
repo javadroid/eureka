@@ -1,15 +1,15 @@
-import { View, Text,StyleSheet,Image, TouchableOpacity } from 'react-native'
+import { View, Text,StyleSheet,Image, TouchableOpacity, Pressable } from 'react-native'
 import React from 'react'
 import colors from '../../constants/colors';
 import fontSize from '../../constants/fontSize';
 
 
-export default function NewsList(itemData,navigation: any,navigate=null,navigateData={},onPress=null){
+export default function NewsList({itemData,navigation,navigate=null,navigateData={},onPress=null}){
   const HandlePress = () => {
     navigate ? navigation.navigate(navigate, navigateData) :null
   }
   return (
-    <TouchableOpacity onPress={HandlePress} style={styles.newsCard}>
+    <Pressable onPress={HandlePress} style={styles.newsCard}>
     <Image style={styles.newsImage} source={itemData.item.img} />
 
     <View style={styles.newsContent}>
@@ -17,7 +17,7 @@ export default function NewsList(itemData,navigation: any,navigate=null,navigate
       <Text style={styles.newsContenttitle}>{itemData.item.title}</Text>
       <Text style={styles.newsContentDate}>{itemData.item.date}</Text>
     </View>
-  </TouchableOpacity>
+  </Pressable>
   )
 }
 

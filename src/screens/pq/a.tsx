@@ -152,13 +152,13 @@ export default function Questions({navigation,route}) {
   const onPressAddImage = (image: any) => {
     if (image.type === "video") {
       const str = `data:video/mp4;base64,${image.base64}`;
-      console.log(image);
+   // console.log(image);
       richText.current?.insertHTML(
         `<video controls src="${image.uri}" style="width: 100%; height: auto;"></video>`
       );
     } else if (image.type === "image") {
       const str = `data:image/gif;base64,${image.base64}`;
-      console.log(str);
+   // console.log(str);
       richText.current?.insertImage(str);
     }
   };
@@ -192,7 +192,7 @@ export default function Questions({navigation,route}) {
       setAnswercontent('')
       answercontent='';
 
-      console.log("handleDoubleClick", question);
+   // console.log("handleDoubleClick", question);
       
       
       if (question?.subquestions.length !== 0) {
@@ -218,13 +218,13 @@ export default function Questions({navigation,route}) {
       richText.current.setContentHTML(question?.question);
       setAnswercontent(question?.answer);
       answercontent = question?.answer;
-      console.log("handleClick", question);
+   // console.log("handleClick", question);
     } else {
       setDescHTML("");
       descHTML = "";
       setAnswercontent("");
       answercontent = "";
-      console.log("handleClick", selectedItem);
+   // console.log("handleClick", selectedItem);
     }}
   };
   const handleback = () => {
@@ -242,7 +242,7 @@ export default function Questions({navigation,route}) {
         richText.current.setContentHTML(question?.question);
         setDescHTML(question?.question);
         setAnswercontent(question?.answer)
-        console.log("handleback", question, selectedItem);
+     // console.log("handleback", question, selectedItem);
       }
     });
     setquestions(temp);
@@ -296,7 +296,7 @@ export default function Questions({navigation,route}) {
         const nextSub = questions[i - 1]?.subquestions;
 
         if (nextSub && nextSub.length > 0) {
-          console.log("prevQuestion", sub, i);
+       // console.log("prevQuestion", sub, i);
           handleDoubleClick(questions[i - 1], i);
           handleClick(nextSub.length - 1, questions[nextSub.length - 1]);
         } else {
@@ -341,7 +341,7 @@ export default function Questions({navigation,route}) {
      
       setquestions(newquestions);
       handleClick(questions.length + 1,{ id: `${questions.length + 1}`, question: "",  questionNo:` ${currentParent.id} Sub-Questions ${questions.length + 1}`, answer: "" })
-      console.log(newquestions);
+   // console.log(newquestions);
     } else {
       const newquestions = [
         ...questions,
@@ -361,7 +361,7 @@ export default function Questions({navigation,route}) {
         answer: "",
         questionNo:`${questions.length + 1}`
       })
-      console.log(newquestions);
+   // console.log(newquestions);
     }
   };
 
@@ -378,7 +378,7 @@ export default function Questions({navigation,route}) {
     const newquestions = questions.filter(
       (question, idx) => question.id !== deletedquestions?.id
     );
-    console.log(newquestions);
+ // console.log(newquestions);
     setquestions(newquestions);
     setTempMain(newquestions);
 

@@ -1,3 +1,3 @@
 export const environment= {
-    ApiDomain:'https://eureka-api-bvky.onrender.com/api'
+    ApiDomain:'http://localhost:3333/api'
 }

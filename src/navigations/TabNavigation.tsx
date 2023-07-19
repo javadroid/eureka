@@ -16,11 +16,14 @@ import {  DashboardFlow, LectureNoteFlows, PQFlow } from './SideNavigation';
 import { FontAwesome } from '@expo/vector-icons';
 import TimeTable from '../screens/Timetable/TimeTable'
 import { AntDesign } from '@expo/vector-icons';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
+const Drawer = createDrawerNavigator();
 export default function TabNavigation() {
 
   return (
+
     <Tab.Navigator screenOptions={{
       headerShadowVisible: false,
       headerTransparent: true, headerTitleAlign: 'center',

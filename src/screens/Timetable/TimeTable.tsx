@@ -50,7 +50,7 @@ export default function TimeTable({ navigation }) {
 
   const onChangeTextHandler = useCallback((inputId: any, inputValue: any) => {
     const result = (FormActions(inputId, inputValue))
-    console.log(result, inputId)
+ // console.log(result, inputId)
     dispatchFormState({ inputId, validationResult: result, inputValue })
   }, [dispatchFormState])
   const HandleExam = () => {

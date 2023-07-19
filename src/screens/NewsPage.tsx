@@ -6,10 +6,12 @@ import colors from '../constants/colors';
 import fontSize from '../constants/fontSize';
 import { download } from '../../assets/image/ImagesIndex';
 import RenderHtml from 'react-native-render-html'; 
+import { useSelector } from 'react-redux';
 
 export default function NewsPage({ navigation }) {
   const { width, height } = useWindowDimensions();
   const scrollViewRef = useRef(null);
+  const userData = useSelector((state: any) => state.user.userData)
   const [descHTML, setDescHTML] = useState(`
   Eid Mubarak
   Hi Emmanuel, 
@@ -261,19 +263,19 @@ const handleScroll = (event) => {
   const { y } = event.nativeEvent.contentOffset;
   // const scrollThreshold = 200; // Set your desired scroll threshold here
   // console.log(y, hideTrending)
-  console.log(backgroundImageHeight," scroll " + y)
+  // console.log(backgroundImageHeight," scroll " + y)
   if (y >= 200 &&y <=600) {
    
     setBackgroundImageHeight(height-(y));
     backgroundImageHeight=height-y
-    console.log(backgroundImageHeight)
+ // console.log(backgroundImageHeight)
   } else  {
     // setBackgroundImageHeight(height)
   }
 };
   return (
     <CustomPageCointainer style={styles.container}>
-      <HeaderMenu backButton={false} headerTitle='' navigation={navigation} />
+      <HeaderMenu userDataUpdated={userData} backButton={false} headerTitle='' navigation={navigation} />
       <ImageBackground source={download} style={{ ...styles.imageContainer, ...{ height: backgroundImageHeight , maxHeight: height * 0.5 } }}>
 
 

@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 import internetConnectionSlice from './internetConnectionSlice'
 import expoUpdateSlice from './expoUpdateSlice'
+import userSlice from './userSlice'
 
 
 export const store = configureStore({
   reducer: {
     internetConnection:internetConnectionSlice,
-    expoUpdate:expoUpdateSlice
+    expoUpdate:expoUpdateSlice,
+    user:userSlice
   },
 })
 

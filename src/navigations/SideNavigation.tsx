@@ -18,6 +18,7 @@ import LectureNotesList from '../screens/lecture/LectureNotesList'
 import LectureNotes from '../screens/lecture/LectureNotes'
 import StudentDashboard from '../screens/StudentDashboard'
 import NewsPage from '../screens/NewsPage'
+import TimeTable from '../screens/Timetable/TimeTable'
 
 
 const Stack = createNativeStackNavigator()
@@ -41,6 +42,33 @@ export  function LectureNoteFlows() {
     )
   }
   
+  export function TimetableFlow(){
+    return(
+      <Stack.Navigator screenOptions={{
+        headerTransparent:true,
+        headerTitle:'',
+        headerTitleAlign: 'center',
+      }} initialRouteName='Timetable'>
+        
+  
+        <Stack.Group screenOptions={{
+          headerTitle: '',
+          headerTransparent: true,
+          presentation: "containedModal"
+        }}>
+          <Stack.Screen options={{
+            headerTitle: '',
+            headerTitleAlign: 'center',
+  
+          }} name='Timetable' component={TimeTable} />
+  
+        </Stack.Group>
+  
+        
+  
+  </Stack.Navigator>
+    )
+  }
   export  function PQFlow() {
     return (
       <Stack.Navigator screenOptions={{

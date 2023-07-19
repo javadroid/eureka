@@ -13,26 +13,38 @@ import colors from '../../constants/colors';
 import fontSize from '../../constants/fontSize';
 import FloatingButton from '../../components/button/FloatingButton';
 import TabNavigation from '../../navigations/TabNavigation';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { DrawerComponent } from './DrawerComponent';
 
-const datas = [{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
+const datas = [{ title: 'CSC111', caption: 'Introduction to computer',questionNo:40 },
+{ title: 'CSC111', caption: 'Introduction to computer',questionNo:40 },
+{ title: 'CSC111', caption: 'Introduction to computer',questionNo:40 },
+{ title: 'CSC111', caption: 'Introduction to computer',questionNo:40 },
+{ title: 'CSC111', caption: 'Introduction to computer',questionNo:40 },
+{ title: 'CSC111', caption: 'Introduction to computer',questionNo:40 },
+{ title: 'CSC111', caption: 'Introduction to computer',questionNo:40 },
+{ title: 'CSC111', caption: 'Introduction to computer',questionNo:40 },
 ]
 export default function CourseList({ navigation, isCustomHeader = true, isSearchBox = true, data = datas }) {
     const [modalVisible, setModalVisible] = useState(false)
-
+    const[answerVisible, setAnswerVisible]=useState(false)
     const HandleExam =() => {
         setModalVisible(false)
         navigation.navigate('Questions')
     }
+    const displayAnswer = () => {
+        setAnswerVisible(!answerVisible)
+    }
+    const floatingButtonItem=[
+        {IconPack:Feather,iconName:answerVisible?'eye':'eye-off',color:'white',size:24,onPress:displayAnswer},
+        {IconPack:MaterialIcons,iconName:'feedback',color:'white',size:24,onPress:displayAnswer},
+        ]
     return (
         <>
-            <FloatingButton  />
+         
+         
+            <FloatingButton item={floatingButtonItem} />
+            
             <CustomPageCointainer style={{ display: 'flex' }} edgeTop={'top'} >
                 <HeaderMenu navigation={navigation} />
 
@@ -77,7 +89,7 @@ export default function CourseList({ navigation, isCustomHeader = true, isSearch
                 </Modal>
                 <FlatList data={data} renderItem={(item) => ItemList(item, navigation, undefined, {}, setModalVisible)} />
 
-
+               
 
             </CustomPageCointainer >
             {/* <TabNavigation/> */}
@@ -95,7 +107,7 @@ const styles = StyleSheet.create({
 
     },
     headerTitle: {
-        marginTop: 80,
+        marginTop: 70,
         fontFamily: 'bold',
         fontSize: fontSize.title.fontSize,
         lineHeight: fontSize.title.lineHeight,
@@ -198,3 +210,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     }
 })
+
+

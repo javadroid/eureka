@@ -9,6 +9,7 @@ import { Feather } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler'
 import ItemList from '../../components/flat/ItemList'
 import { MaterialIcons } from '@expo/vector-icons';
+import { useSelector } from 'react-redux'
 
 const datas = [{ title: 'Title', caption: 'Caption', },
     { title: 'Title', caption: 'Caption', },
@@ -20,7 +21,7 @@ const datas = [{ title: 'Title', caption: 'Caption', },
     { title: 'Title', caption: 'Caption', },
     ]
 export default function SectionList({ navigation, isCustomHeader = true, isSearchBox = true,data=datas}) {
-    
+    const userData = useSelector((state: any) => state.user.userData)
     return (
         <>
             <View style={styles.floatContainer}>
@@ -33,8 +34,8 @@ export default function SectionList({ navigation, isCustomHeader = true, isSearc
                 </TouchableOpacity>
             </View>
             <CustomPageCointainer style={{ display: 'flex' }} edgeTop={'top'} >
-                <HeaderMenu navigation={navigation} />
-
+                <HeaderMenu userDataUpdated={userData} navigation={navigation} />
+                
                 {isCustomHeader && <CustomHeader style={{ ...styles.headerTitle, ...{} }} label='Faculties' />}
 
                 {isSearchBox &&

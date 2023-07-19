@@ -10,12 +10,55 @@ import FloatingButton from '../../components/button/FloatingButton'
 import GestureRecognizer from 'react-native-swipe-gestures'
 import RenderHtml from 'react-native-render-html'; 
 
+const notes=[{
+    id:1,title:`INTRODUCTION TO SOFTWARE ENGINEERING`,note:`<p>The term <strong><em>software engineering</em></strong> is composed of two words, software and engineering.</p>
+    <p><br><strong>Software </strong>is more than just a program code. A program is an executable code, which serves some<br>computational purpose. Software is considered to be a collection of executable programming code,<br>associated libraries and documentations. Software, when made for a specific requirement is called<br><strong>software product.</strong></p>
+    <p><br><strong>Engineering </strong>on the other hand, is all about developing products, using well-defined, scientific<br>principles and methods.<br>So, we can define<strong> software engineering</strong> as an engineering branch associated with the<br>development of software product using well-defined scientific principles, methods and procedures. It<br>is an engineering discipline that is concerned with all aspects of software production from the early<br>stages of system specification through to maintaining the system after it has gone into use. It is<br>an engineering discipline because it uses appropriate theories and methods to solve problems bearing<br>in mind organizational and financial constraints. Software engineering focuses on all aspects of<br>software production and not just on the technical process of development; it includes project<br>management and the development of tools, methods etc. to support software production.<br>The outcome of software engineering is an efficient and reliable software product.</p>
+    <p><br>IEEE defines software engineering as:</p>
+    <p><em>The application of a systematic, disciplined, quantifiable approach to the development, operation and</em><br><em>maintenance of software.</em></p>
+    <p><br>It is usually cheaper, in the long run, to use software engineering methods and techniques for<br>software systems rather than just write the programs as if it was a personal programming project.<br>For most types of system, the majority of costs are the costs of changing the software after it has<br>gone into use.</p>
+    <p><br>Any software process includes four types of activities:</p>
+    <ul>
+    <li>Software <strong>specification</strong>, where customers and engineers define the software that is to<br>be produced and the constraints on its operation.</li>
+    <li>Software <strong>development</strong>, where the software is designed and programmed.</li>
+    <li>Software <strong>validation</strong>, where the software is checked to ensure that it is what the<br>customer requires.</li>
+    <li>Software <strong>evolution</strong>, where the software is modified to reflect changing customer and<br>market requirements.</li>
+    </ul>
+    <p><br><strong><span style="text-decoration: underline;">FAQ about software engineering</span></strong></p>
+    <p><br><strong>What are the fundamental software engineering activities?</strong></p>
+    <p style="padding-left: 40px;">Software specification, software development, software validation and software evolution.</p>
+    <p><br><strong>What is the difference between software engineering and computer science?</strong></p>
+    <p style="padding-left: 40px;">Computer science focuses on theory and fundamentals; software engineering is concerned<br>with the practicalities of developing and delivering useful software.</p>
+    <p><br><strong>What is the difference between software engineering and system engineering?</strong></p>
+    <p style="padding-left: 40px;">System engineering is concerned with all aspects of computer-based systems development<br>including hardware, software and process engineering. Software engineering is part of this<br>more general process.</p>
+    <p><br><strong>What are the key challenges facing software engineering?</strong></p>
+    <p style="padding-left: 40px;">Coping with increasing diversity, demands for reduced delivery times and developing<br>trustworthy software.</p>
+    <p>&nbsp;</p>`
+}]
 
 export default function LectureNotes({ navigation }) {
     const { width } = useWindowDimensions();
     const [descHTML, setDescHTML] = useState('');
     const [modalVisible, setModalVisible] = useState(false)
+    const [content,setContent]=useState(0)
+  
 
+    const   HandleSwipeLeft=(state:any)=>{
+           
+        if(content >0){
+            setContent(content-1)
+            console.log(content)
+        }
+        
+    }
+    const   HandleSwipeRight=(state:any)=>{
+        // console.log(content,' ', questions.length)
+        if(content<notes.length-1){
+            setContent(content+1)
+         
+        }
+        
+    }
     return (
         <>
             {/* <StickyButton /> */}
@@ -53,11 +96,11 @@ export default function LectureNotes({ navigation }) {
 
             </Modal>
             <CustomPageCointainer style={{ ...styles.container }} >
-                <HeaderMenu navigation={navigation} headerTitle='CSC 419' />
-                <CustomHeader style={{ ...styles.headerTitle, ...{} }} label='2019/2020 Examination' />
-                <View style={styles.questionHeader}>
+                <HeaderMenu  navigation={navigation} headerTitle='CSC 419' />
+                <CustomHeader style={{ ...styles.headerTitle, ...{} }} label={notes[content].title} />
+                {/* <View style={styles.questionHeader}>
                     <Text style={styles.questionHeaderText}>20</Text>
-                </View>
+                </View> */}
 
         
                     <GestureRecognizer style={{flex:1, flexDirection:'row',}}
@@ -70,7 +113,7 @@ export default function LectureNotes({ navigation }) {
                                     <RenderHtml
                                         contentWidth={width}
                                         source={{
-                                            html: descHTML
+                                            html: notes[content].note
                                         }}
                                         ignoredDomTags={['video']}
                                     />
@@ -93,12 +136,13 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         marginTop: 80,
-        marginBottom: 30,
+        marginBottom: 10,
         fontFamily: 'regular',
-        fontSize: fontSize.body.fontSize,
-        lineHeight: fontSize.body.lineHeight,
+        fontSize: fontSize.bodySmall.fontSize,
+        lineHeight: fontSize.bodySmall.lineHeight,
         color: colors.textColor,
         alignSelf: 'center',
+        textAlign:'center'
     },
     questionHeader: {
         borderRadius: 50,

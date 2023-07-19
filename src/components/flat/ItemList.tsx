@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity, Pressable } from 'react-native'
 import colors from '../../constants/colors'
 import fontSize from '../../constants/fontSize'
 
@@ -8,13 +8,13 @@ export default function ItemList(itemData: any, navigation: any, navigate = unde
     navigate ? navigation.navigate(navigate, navigateData) : action(true)
   }
   return (
-    <TouchableOpacity onPress={HandlePress} style={{ ...styles.container, ...{ marginTop: itemData.index === 0 ? 0 : 15 } }}>
+    <Pressable onPress={HandlePress} style={{ ...styles.container, ...{ marginTop: itemData.index === 0 ? 0 : 15 } }}>
       <Text style={styles.title}>{itemData.item.title}</Text>
       <View style={{ justifyContent: 'space-between', flexDirection: 'row' }} >
         <Text style={styles.caption}>{itemData.item.caption}</Text>
-        <Text style={styles.caption}>{itemData.item.caption}</Text>
+        <Text style={styles.caption}>{itemData.item.questionN}</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 const styles = StyleSheet.create({

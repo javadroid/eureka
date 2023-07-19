@@ -1,15 +1,20 @@
-import React from 'react'
-import { TouchableOpacity, StyleSheet, View,Text } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { TouchableOpacity, StyleSheet, View,Text, Animated } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import colors from '../../constants/colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import fontSize from '../../constants/fontSize';
 
-export default function StickyButton() {
+export default function StickyButton({onPress}) {
+    const threshold = 30; // Position threshold to open/close the drawer
+    const boxWidth = useRef(new Animated.Value(5)).current;
+    // const [zIndex, setzIndex] = useState(0)
+
+    
     return (
         <View style={styles.floatContainer}>
-            <TouchableOpacity style={styles.floatButton}>
+            <TouchableOpacity onPress={onPress} style={styles.floatButton}>
   
                 <MaterialCommunityIcons style={{transform:[{rotate:'90deg'}]}} name="arrow-right-thin-circle-outline" size={24} color="white" />
                 <Text style={styles.floatText}>Goto</Text>

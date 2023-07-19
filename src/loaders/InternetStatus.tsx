@@ -11,6 +11,8 @@ export default  async function InternetStatus( dispatch:any) {
         const isConnected = netInfoState.isConnected;
         const {details}=netInfoState
         dispatch(checkConnection({ isConnected, details}))  
+     // console.log(netInfoState)
+        return( await netInfoState.isConnected)
 }
 
 

@@ -13,20 +13,21 @@ import colors from '../../constants/colors';
 import fontSize from '../../constants/fontSize';
 import FloatingButton from '../../components/button/FloatingButton';
 import TabNavigation from '../../navigations/TabNavigation';
+import LectureNotesItemList from '../../components/flat/LectureNotesItemList';
 
-const datas = [{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
-{ title: 'Title', caption: 'Caption', },
+const datas = [{ title: 'CSC111', caption: '2 Topics', },
+{ title: 'CSC111', caption: '2 Topics', topics: ['Introduction and the course overview.', 'Downloading Unity.', 'Installing Unity and Taking a look at interface.', 'Your First Game.', 'Introduction and the course overview.', 'Downloading Unity.', 'Installing Unity and Taking a look at interface.', 'Your First Game.'] },
+{ title: 'CSC111', caption: '2 Topics', },
+{ title: 'CSC111', caption: '2 Topics', },
+{ title: 'CSC111', caption: '2 Topics', },
+{ title: 'CSC111', caption: '2 Topics', },
+{ title: 'CSC111', caption: '2 Topics', },
+{ title: 'CSC111', caption: '2 Topics', },
 ]
 export default function LectureNotesList({ navigation, isCustomHeader = true, isSearchBox = true, data = datas }) {
     const [modalVisible, setModalVisible] = useState(false)
-
-    const HandleExam =() => {
+    const [expand, setExpand] = useState(false)
+    const HandleExam = () => {
         setModalVisible(false)
         navigation.navigate('LectureNotes')
     }
@@ -44,38 +45,19 @@ export default function LectureNotesList({ navigation, isCustomHeader = true, is
                         <TextInput placeholderTextColor={'white'} placeholder='Courses' style={styles.searchText} />
                     </View>}
 
-                <Modal animationType='fade'
-                    transparent={true}
-                   
-                    // style={{ width: 'auto', height: 'auto' }}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        
-                        setModalVisible(!modalVisible);
-                    }}>
-                    <Pressable onPress={()=> setModalVisible(false)} style={styles.centeredView}>
-                        <Pressable onPress={()=> {}} style={styles.modalView}>
-                            <Text style={styles.modalViewHeaderText}>Choose question type</Text>
+                
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        scrollEnabled={!expand} nestedScrollEnabled={false}
+                        data={data}
+                        renderItem={(item) => {
+                            return (
+                                <LectureNotesItemList itemData={item} navigation={navigation} navigate='LectureNotes'  setExpand={setExpand} />
+                            )
+                        }
+                        } />
 
-                            <View style={styles.modalButtons}>
-                                <TouchableOpacity style={styles.Button} onPress={() => {
-                                    // setModalVisible(!modalVisible);
-                                }}>
-                                    <Text style={styles.modalButtonText}>
-                                        Test
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.Button} onPress={HandleExam}>
-                                    <Text style={styles.modalButtonText}>
-                                        Exam
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                        </Pressable>
-                    </Pressable>
-
-                </Modal>
-                <FlatList data={data} renderItem={(item) => ItemList(item, navigation, undefined, {}, setModalVisible)} />
+               
 
 
 
@@ -95,7 +77,7 @@ const styles = StyleSheet.create({
 
     },
     headerTitle: {
-        marginTop: 80,
+        marginTop: 70,
         fontFamily: 'bold',
         fontSize: fontSize.title.fontSize,
         lineHeight: fontSize.title.lineHeight,
@@ -152,12 +134,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-      
+
     },
     modalView: {
         // margin: 20,
         backgroundColor: colors.primaryHover,
-        
+
         padding: 40,
         // alignItems: 'center',
         shadowColor: '#000',

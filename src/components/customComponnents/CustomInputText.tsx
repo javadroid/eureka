@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   errorContainer: {
     alignItems: 'flex-end',
-    marginVertical: 5
+    marginTop:-25
   },
   errorText: {
     color: colors.errors,

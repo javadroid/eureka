@@ -18,11 +18,15 @@ import { userImage } from '../../assets/image/ImagesIndex';
 
 export default function ProfileImage({ style = { height: 80, width: 80 },setImage, stateUserData = {}, profileImage = undefined as any, uid = '', showEditButton = true }) {
     const dispatch = useDispatch()
-    const imageSource = profileImage ? { uri: profileImage } : userImage
+    const userData = useSelector((state: any) => state.user.userData)
+    const imageSource = userData?.profileImage ? { uri: userData?.profileImage } : userImage
     const [image, setimage] = useState(imageSource)
     const [errors, seterrors] = useState(null)
     const [isLoading, setisLoading] = useState(false)
-    const userData = useSelector((state: any) => state.user.userData)
+  
+    useEffect(() => {
+        setimage(imageSource)
+    }, [userData])
     useEffect(() => {
         if (errors !== null) {
             Alert.alert("An error has occurred", errors)

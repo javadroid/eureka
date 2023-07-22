@@ -30,6 +30,7 @@ export function CustomSideMenu(props) {
 
     const paperTheme = useTheme();
     const userData = useSelector((state: any) => state.user.userData)
+    // 
     const dispatch=useDispatch()
     const signOut=()=>{
 
@@ -45,7 +46,7 @@ export function CustomSideMenu(props) {
                         <View style={{flexDirection:'row',marginTop: 15}}>
                             <Avatar.Image 
                                 source={{
-                                    uri: userData?.profileImage||userData
+                                    uri: userData?.profileImage||userImage
                                 }}
                                 size={50}
                             />

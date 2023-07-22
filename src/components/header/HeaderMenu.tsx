@@ -8,9 +8,13 @@ import fontSize from '../../constants/fontSize'
 import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
+import ProfileImage from '../ProfileImage';
 
 export function HeaderMenu({ backButton = true, navigation, headerTitle = '', headerTitleStyle = {} as any }) {
+  
   const userData =  useSelector((state: any) => state.user.userData)
+  const image = userData?.profileImage 
+  // console.log(userData?.profileImage,"ll")
   useEffect(() => {
    
 // console.log("first")
@@ -45,13 +49,14 @@ export function HeaderMenu({ backButton = true, navigation, headerTitle = '', he
           <Ionicons style={{}} name="notifications-outline" size={24} color={colors.primaryHover} />
           <Text style={{ width: 10, height: 10, backgroundColor: colors.primaryHover, marginLeft: -10, borderRadius: 50, marginRight: 5, padding: 5 }}></Text>
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <UserCardItem />
+            {/* <UserCardItem /> */}
+            <ProfileImage style={{ height: 30, width: 30 }} showEditButton={false} profileImage={image} />
           </TouchableOpacity>
         </View>
       },
 
     })
-  }, [userData])
+  }, [])
   return (
 
     <></>

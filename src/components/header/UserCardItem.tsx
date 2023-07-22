@@ -9,7 +9,8 @@ import { useSelector } from 'react-redux';
 export default function UserCardItem({   onPress = undefined as any }) {
   const userData =  useSelector((state: any) => state.user.userData)
   const image = userData?.profileImage 
-  // console.log(image,userData)
+  // console.log(userData?.profileImage,"ll")
+
   return (
 
     <View

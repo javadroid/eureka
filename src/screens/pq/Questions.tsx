@@ -25,6 +25,14 @@ const  questions=[
     {no:'3a',question:`<p dir="ltr" style="line-height: 2;" role="presentation">Draw a state diagram of the control software for an automatic washing machine that has different programs for different types of clothes. <strong>[9½ Marks]&nbsp;</strong></p>
     <p>&nbsp;</p>`},
     {no:'3b',question:`<p dir="ltr" style="line-height: 2;" role="presentation">Software architectural design is an important stage in the software development process; explicitly discuss three (3) benefits of providing a detailed design and documentation at this stage. <strong>[6 Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`},
+    {no:'2a',question:`<p dir="ltr" style="line-height: 2;" role="presentation">Software architectural design is an important stage in the software development process; explicitly discuss three (3) benefits of providing a detailed design and documentation at this stage. <strong>[6 Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`},
+    {no:'2b',question:`<p dir="ltr" style="line-height: 2;" role="presentation">There are different perspectives from which you may develop various abstract models to represent the would-be system. Briefly discuss these four (4) perspectives and for each, mention the graphical notation associated with it. <strong>[8 Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`},
+    {no:'3a',question:`<p dir="ltr" style="line-height: 2;" role="presentation">Draw a state diagram of the control software for an automatic washing machine that has different programs for different types of clothes. <strong>[9½ Marks]&nbsp;</strong></p>
+    <p>&nbsp;</p>`},
+    {no:'3b',question:`<p dir="ltr" style="line-height: 2;" role="presentation">Software architectural design is an important stage in the software development process; explicitly discuss three (3) benefits of providing a detailed design and documentation at this stage. <strong>[6 Marks]&nbsp;</strong></p>
     <p>&nbsp;</p>`}
 ]
 export default function Questions({ navigation }) {
@@ -67,7 +75,7 @@ export default function Questions({ navigation }) {
         <>
             <StickyButton onPress={HandleGoto} />
             <FloatingButton item={floatingButtonItem} />
-            <DrawerComponent zIndex={zIndex} setzIndex={setzIndex} />
+            <DrawerComponent setContent={setContent} listNumber={questions} zIndex={zIndex} setzIndex={setzIndex} />
             <Modal animationType='fade'
                 transparent={true}
 

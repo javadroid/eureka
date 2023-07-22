@@ -6,8 +6,12 @@ import { NavigationContainer, } from '@react-navigation/native';
 import { createStackNavigator, } from '@react-navigation/stack';
 import { StyleSheet, Text, View } from 'react-native';
 import { currentAppVersion, getAppVersion } from '../constants/service';
-import CheckUpdate from '../loaders/checkUpdate';
+
 import MainNavigation from './MainNavigation';
+import CheckUserData from '../loaders/CheckUserData';
+import Login from '../screens/Login';
+import DrawerNavigation from './DrawerNavigation';
+import CheckUpdate from '../loaders/CheckUpdate';
 
 
 export default function AppNavigation() {
@@ -20,8 +24,7 @@ export default function AppNavigation() {
   }
   return (
     <NavigationContainer>
-      <CheckUpdate/>
-      
+      <CheckUpdate/>      
     </NavigationContainer>
 
   )

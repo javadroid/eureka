@@ -148,11 +148,13 @@ useEffect(()=>{
             <ProfileImage setImage={setImage} profileImage={userData?.profileImage} showEditButton={editable} />
             <Text style={styles.topBoxTitle}>{userData?.fullname}</Text>
 
-            <View style={{ ...styles.lineDivider, }}></View>
+            <View style={{ ...styles.lineDivider, }} />
             <Viewtype onChangeText={(text: string) => onChangeTextHandler('about', text)} style={{ ...styles.about, backgroundColor: Viewtype === TextInput ? colors.errors : undefined, }}>{userData?.about}</Viewtype>
           </View>
 
-          <ScrollView style={styles.bottomContainers}>
+          <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.bottomContainers}>
 
             <BottomContainer id2={'username'} onChangeTextHandler={onChangeTextHandler} Viewtype2={Viewtype} style={{ backgroundColor: 'white' }} IconPage1={MaterialCommunityIcons} IconPage2={FontAwesome}
               iconName1={true ? 'gender-female' : 'gender-male'} iconName2={'user-o'} text1={userData?.gender} text2={userData?.username} />
@@ -179,12 +181,17 @@ const BottomContainer = ({ onChangeTextHandler, id1, id2, Viewtype1 = Text, View
   return (
     <View style={{ ...styles.bottomContainer, ...style }}>
 
-      <IconPage1 name={iconName1} size={24} color={style ? colors.primaryHover : "white"} />
+      <View style={styles.detailHold} >
+        <IconPage1 name={iconName1} size={24} color={style ? colors.primaryHover : "white"} />
+        <Viewtype1 onChangeText={(text: string) => onChangeTextHandler(id1, text)} style={{ ...styles.profileText, ...{ backgroundColor: Viewtype1 === TextInput ? colors.errors : undefined, marginBottom: 8, color: style ? "black" : "white" } }}>{text1}</Viewtype1>
+      </View>
 
-      <Viewtype1 onChangeText={(text: string) => onChangeTextHandler(id1, text)} style={{ ...styles.profileText, ...{ backgroundColor: Viewtype1 === TextInput ? colors.errors : undefined, marginBottom: 8, color: style ? "black" : "white" } }}>{text1}</Viewtype1>
-      <View style={{ ...styles.lineDivider, ...{ backgroundColor: colors.primaryInactive, marginBottom: 8, } }}></View>
-      <IconPage2 name={iconName2} size={24} color={style ? colors.primaryHover : "white"} />
-      <Viewtype2 onChangeText={(text: string) => onChangeTextHandler(id2, text)} style={{ ...styles.profileText, ...{ backgroundColor: Viewtype2 === TextInput ? colors.errors : undefined, color: style ? "black" : "white" } }}>{text2}</Viewtype2>
+      <View style={{ ...styles.lineDivider, ...{ backgroundColor: colors.primaryInactive } }}></View>
+
+      <View style={styles.detailHold} >
+        <IconPage2 name={iconName2} size={24} color={style ? colors.primaryHover : "white"} />
+        <Viewtype2 onChangeText={(text: string) => onChangeTextHandler(id2, text)} style={{ ...styles.profileText, ...{ backgroundColor: Viewtype2 === TextInput ? colors.errors : undefined, color: style ? "black" : "white" } }}>{text2}</Viewtype2>
+      </View>
     </View>
   )
 }
@@ -224,6 +231,7 @@ const styles = StyleSheet.create({
   },
   topBoxTitle: {
     marginTop: 15,
+    textAlign: 'center',
     fontFamily: 'bold',
     fontSize: fontSize.titleLarge.fontSize,
     lineHeight: fontSize.titleLarge.lineHeight,
@@ -231,12 +239,11 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   lineDivider: {
-    display: 'flex',
     width: '100%',
     // zIndex:10,
     backgroundColor: colors.primaryHover,
-    height: 2
-
+    height: 0.8,
+    marginVertical: 6
   },
   about: {
     fontFamily: 'interRegular',
@@ -246,16 +253,20 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     marginTop: 15,
-
+    borderRadius: 6
+  },
+  detailHold: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'space-evenly',
+    minWidth: '75%',
+    paddingLeft: 6
   },
   bottomContainers: {
-
     marginTop: 15,
     marginHorizontal: 35,
     display: 'flex',
-
-
-
   },
   bottomContainer: {
     borderRadius: 10,
@@ -266,16 +277,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 24,
-    paddingVertical: 8,
-    marginTop: 15,
+    paddingVertical: 10,
+    marginVertical: 14,
 
   },
   profileText: {
-    marginTop: 5,
+    marginVertical: 10,
     fontFamily: 'interRegular',
     fontSize: fontSize.bodySmall.fontSize,
     lineHeight: fontSize.bodySmall.lineHeight,
-
+    borderRadius: 6,
+    paddingHorizontal: 4.5,
     color: 'white',
   },
 

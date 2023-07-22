@@ -117,7 +117,9 @@ export default function CustomInputText({
             onChangeText={onChangeTextHandler}
             editable={editable}
             textContentType={textContentType}
-            style={{ ...styles.input }} />
+            style={{ ...styles.input }} 
+            cursorColor={colors.primaryColor}
+            />
 
           {pickerRef && (
             <CustomPicker setValue={onChangeTextHandler} value={value} pickerRef={pickerRef} items={items} />

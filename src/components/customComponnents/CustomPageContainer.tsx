@@ -19,7 +19,7 @@ export default function CustomPageCointainer({edgeTop=''as any,style={},children
 
 
 
-    <LinearGradient colors={colorsLinearGradient} style={{ flex :1, display:'flex',}}
+    <LinearGradient colors={colorsLinearGradient} style={{ flex : 1 }}
       start={[0, 0]}
       end={[1, 1]}
       locations={[0, 0.196, 0.4543, 0.7127, 0.9711, 1.2295]}
@@ -36,10 +36,9 @@ export default function CustomPageCointainer({edgeTop=''as any,style={},children
 // PageCointainer.propTypes = {edges:[],style:{}}
 const styles = StyleSheet.create({
   container: {
-    display:'flex',
     flex: 1,
     flexDirection: 'column',
-    paddingHorizontal: 20,
+    paddingHorizontal: 19,
     // backgroundColor:() =><HeaderBackground/>
    
   }

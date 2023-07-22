@@ -5,6 +5,7 @@ export default {
     caption: { fontSize: 12, lineHeight: 16 },
     header3: { fontSize: 32, lineHeight: 40 },
     title: { fontSize: 20, lineHeight: 28 },
+    title2: { fontSize: 21 },
     titleLarge: { fontSize: 24, lineHeight: 30 },
 
 }

@@ -29,7 +29,11 @@ export default function CustomButtonSubmit({style={},onLongPress=undefined as an
     },
   });
   return (
-    <TouchableOpacity   onLongPress={disabled?()=>{}:onLongPress} onPress={disabled?()=>{}:onPress} style={{...styles.button, ...style}}>
+    <TouchableOpacity   
+    activeOpacity={0.6}
+    onLongPress={disabled?()=>{}:onLongPress} 
+    onPress={disabled?()=>{}:onPress} 
+    style={{...styles.button, ...style}}>
         <Text style={styles.lable}>{lable}</Text>
     </TouchableOpacity>
   )

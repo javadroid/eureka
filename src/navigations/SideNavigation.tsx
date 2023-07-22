@@ -24,20 +24,26 @@ import TimeTable from '../screens/Timetable/TimeTable'
 const Stack = createNativeStackNavigator()
 export  function LectureNoteFlows() {
     return (
-      <Stack.Navigator screenOptions={{  headerTransparent:true,
+      <Stack.Navigator screenOptions={{  
+        headerTransparent:true,
         headerTitle:'',
-        headerTitleAlign: 'center'}} initialRouteName='LectureNotesList'>
+        headerTitleAlign: 'center',
+        animation: 'slide_from_right'
+        }} initialRouteName='LectureNotesList'>
         <Stack.Group screenOptions={{ }}>
-          <Stack.Screen name='LectureNotesList' component={LectureNotesList} options={{
+          <Stack.Screen 
+          name='LectureNotesList' 
+          component={LectureNotesList} 
+          options={{
             // headerShown: false
-            
           }} />
-          <Stack.Screen name='LectureNotes' component={LectureNotes} options={{
+          <Stack.Screen 
+          name='LectureNotes' 
+          component={LectureNotes} 
+          options={{
             // headerShown: false
-            
           }} />
         </Stack.Group>
-  
   </Stack.Navigator>
     )
   }
@@ -69,6 +75,7 @@ export  function LectureNoteFlows() {
   </Stack.Navigator>
     )
   }
+
   export  function PQFlow() {
     return (
       <Stack.Navigator screenOptions={{
@@ -115,14 +122,14 @@ export  function LectureNoteFlows() {
         <Stack.Group screenOptions={{
           headerTitle: '',
           headerTransparent: true,
-          presentation: "containedModal"
+          // presentation: "containedModal"
         }}>
          
   
       <Stack.Screen options={{
             headerTitle: '',
             headerTitleAlign: 'center',
-  
+            animation: 'slide_from_right'
           }} name='CourseList' component={CourseList} />
   
   
@@ -135,7 +142,7 @@ export  function LectureNoteFlows() {
       <Stack.Screen options={{
             headerTitle: '',
             headerTitleAlign: 'center',
-  
+            animation: 'slide_from_right'
           }} name='YearLists' component={YearList} />
       <Stack.Screen options={{
         headerTitle: '',

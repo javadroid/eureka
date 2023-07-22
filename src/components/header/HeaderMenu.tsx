@@ -62,7 +62,6 @@ export function HeaderMenu({ backButton = true, navigation, headerTitle = '', he
           </TouchableOpacity>
         </View>
       },
-
     })
   }, [])
   return (

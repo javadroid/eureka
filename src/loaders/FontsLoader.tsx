@@ -6,7 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import InternetStatus from './InternetStatus';
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import CheckUpdate from './checkUpdate';
+import CheckUpdate from './CheckUpdate';
 import * as Updates from 'expo-updates';
 import AppNavigation from '../navigations/AppNavigation';
 import { LinearGradient } from 'expo-linear-gradient';

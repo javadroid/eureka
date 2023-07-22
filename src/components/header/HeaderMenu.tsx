@@ -26,17 +26,23 @@ export function HeaderMenu({ backButton = true, navigation, headerTitle = '', he
         marginLeft: 20
       },
       headerLeft: backButton ? () => {
-        return <TouchableOpacity onPress={() => navigation.openDrawer()}>
+        return (
+        <TouchableOpacity  
+        activeOpacity={0.6}
+        onPress={() => navigation.openDrawer()}>
           <AntDesign name="menu-fold" size={24} color={colors.black} />
         </TouchableOpacity>
+        ) 
       } : () => {
-        return <View>
-
-
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <AntDesign name="arrowleft" size={28} color={colors.backgroundWhite} />
-          </TouchableOpacity>
-        </View>
+        return (
+          <View>
+            <TouchableOpacity
+            activeOpacity={0.6} 
+            onPress={() => navigation.goBack()}>
+              <AntDesign name="arrowleft" size={28} color={colors.backgroundWhite} />
+            </TouchableOpacity>
+          </View>
+        )
 
 
       },
@@ -45,10 +51,12 @@ export function HeaderMenu({ backButton = true, navigation, headerTitle = '', he
       headerRight: () => {
 
 
-        return <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+        return <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <Ionicons style={{}} name="notifications-outline" size={24} color={colors.primaryHover} />
           <Text style={{ width: 10, height: 10, backgroundColor: colors.primaryHover, marginLeft: -10, borderRadius: 50, marginRight: 5, padding: 5 }}></Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+          <TouchableOpacity
+           activeOpacity={0.6}
+          onPress={() => navigation.navigate('Profile')}>
             {/* <UserCardItem /> */}
             <ProfileImage style={{ height: 30, width: 30 }} showEditButton={false} profileImage={image} />
           </TouchableOpacity>
@@ -78,7 +86,9 @@ export function HeaderProfileMenu({ onChangeTextHandler, onPress, data, hideEdit
         return <View>
 
 
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity 
+          activeOpacity={0.6}
+          onPress={() => navigation.goBack()}>
             <AntDesign name="arrowleft" size={28} color={colors.backgroundWhite} />
           </TouchableOpacity>
         </View>
@@ -88,9 +98,11 @@ export function HeaderProfileMenu({ onChangeTextHandler, onPress, data, hideEdit
       headerTitle,
       headerTitleStyle: { ...{ fontFamily: 'bold', fontSize: fontSize.title.fontSize, color: colors.textColor }, ...headerTitleStyle, },
       headerRight: !hideEdit ? () => {
-        return <TouchableOpacity onPress={editable ? onPress : () => setEditable(true)}>
-          <MaterialCommunityIcons name={editable ? "check" : "account-edit-outline"} size={28} color={colors.backgroundWhite} />
-        </TouchableOpacity>
+        return <TouchableOpacity 
+          activeOpacity={0.6}
+          onPress={editable ? onPress : () => setEditable(true)}>
+            <MaterialCommunityIcons name={editable ? "check" : "account-edit-outline"} size={28} color={colors.backgroundWhite} />
+          </TouchableOpacity>
       } : () => { },
 
     })

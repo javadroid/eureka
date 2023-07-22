@@ -31,6 +31,7 @@ export default function LectureNotesList({ navigation, isCustomHeader = true, is
         setModalVisible(false)
         navigation.navigate('LectureNotes')
     }
+
     return (
         <>
             <FloatingButton />
@@ -41,25 +42,37 @@ export default function LectureNotesList({ navigation, isCustomHeader = true, is
 
                 {isSearchBox &&
                     <View style={{ ...styles.searchBox, ...{ marginTop: isCustomHeader ? 18 : 60 } }}>
-                        <Feather name="search" size={24} color="white" />
-                        <TextInput placeholderTextColor={'white'} placeholder='Courses' style={styles.searchText} />
+                        <Feather 
+                        name="search" 
+                        size={24} 
+                        color="white" 
+                        />
+                        <TextInput 
+                        placeholderTextColor={colors.extraLightGrey} 
+                        placeholder='Courses' 
+                        cursorColor={'white'}
+                        style={styles.searchText} 
+                        />
                     </View>}
 
-                
                     <FlatList
                         showsVerticalScrollIndicator={false}
-                        scrollEnabled={!expand} nestedScrollEnabled={false}
+                        ListHeaderComponent={<View style={{ height: 22 }} />}
+                        ListFooterComponent={<View style={{ height: 50 }} />}
+                        scrollEnabled={!expand} 
+                        nestedScrollEnabled={false}
                         data={data}
                         renderItem={(item) => {
                             return (
-                                <LectureNotesItemList itemData={item} navigation={navigation} navigate='LectureNotes'  setExpand={setExpand} />
+                                <LectureNotesItemList 
+                                itemData={item} 
+                                navigation={navigation} 
+                                navigate='LectureNotes'  
+                                setExpand={setExpand} 
+                                />
                             )
                         }
                         } />
-
-               
-
-
 
             </CustomPageCointainer >
             {/* <TabNavigation/> */}
@@ -69,17 +82,15 @@ export default function LectureNotesList({ navigation, isCustomHeader = true, is
 }
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
         backgroundColor: 'white',
         borderRadius: 10,
         borderColor: colors.primaryHover,
         padding: 10
-
     },
     headerTitle: {
         marginTop: 70,
         fontFamily: 'bold',
-        fontSize: fontSize.title.fontSize,
+        fontSize: fontSize.title2.fontSize,
         lineHeight: fontSize.title.lineHeight,
         color: colors.textColor,
         // alignSelf:'center',
@@ -89,10 +100,11 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: colors.primaryHover,
         paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingVertical: 10,
         flexDirection: 'row',
         width: '100%',
-        marginBottom: 30,
+        marginBottom: 10,
+        elevation: 2
     },
     searchText: {
         color: 'white',
@@ -107,7 +119,6 @@ const styles = StyleSheet.create({
     floatContainer: {
         zIndex: 1,
         position: 'absolute',
-
         alignSelf: 'flex-end',
         margin: 20,
         bottom: 50,
@@ -122,24 +133,20 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     floatText: {
         fontFamily: 'interRegular',
         fontSize: 8,
         color: 'white'
-
     },
     centeredView: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     modalView: {
         // margin: 20,
         backgroundColor: colors.primaryHover,
-
         padding: 40,
         // alignItems: 'center',
         shadowColor: '#000',

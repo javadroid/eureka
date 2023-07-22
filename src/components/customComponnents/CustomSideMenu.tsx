@@ -26,6 +26,7 @@ import { userImage } from '../../../assets/image/ImagesIndex';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import setlocalRedux from '../../utils/localRedux';
 import { setIsAuthenticated, setUserData, setUserToken } from '../../utils/store/userSlice';
+import colors from '../../constants/colors';
 export function CustomSideMenu(props) {
 
     const paperTheme = useTheme();
@@ -74,18 +75,29 @@ export function CustomSideMenu(props) {
                         </View>
                     </View>
 
-                    <Drawer.Section style={styles.drawerSection}>
+                    <Drawer.Section  
+                    style={styles.drawerSection}
+                    >
                         <DrawerItem 
                             icon={({color, size}) => (
-                              <Ionicons name="home-outline" size={24} color={color}/>
+                              <Ionicons 
+                              name="home-outline" 
+                              size={24} 
+                              color={color}
+                              />
                             )}
+                            labelStyle={{ marginLeft: -10 }}
                             label="Home"
                             onPress={() => {}}                        />
                         <DrawerItem 
-                            icon={({color, size}) => (
-                            
-                              <MaterialCommunityIcons name="timetable" size={size} color={color}/>
+                            icon={({color, size}) => (                     
+                              <MaterialCommunityIcons 
+                              name="timetable" 
+                              size={size} 
+                              color={color}
+                              />
                             )}
+                            labelStyle={{ marginLeft: -10 }}
                             label="Timetable"
                             onPress={() => {props.navigation.navigate('TimetableFlow')}}                        />
                           {/* <DrawerItem 
@@ -104,26 +116,42 @@ export function CustomSideMenu(props) {
                             onPress={() => {}}                        /> */}
                          <DrawerItem 
                             icon={({color, size}) => (
-                      
-                              <MaterialCommunityIcons name="book-edit-outline"  size={size} color={color}/>
+                              <MaterialCommunityIcons 
+                              name="book-edit-outline"  
+                              size={size} 
+                              color={color}
+                              />
                             )}
+                            labelStyle={{ marginLeft: -10 }}
                             label="Add Pass Question"
                             onPress={() => {}}                        />
                          <DrawerItem 
                             icon={({color, size}) => (
-                              <MaterialCommunityIcons name="notebook-plus-outline"   size={size} color={color}/>
+                              <MaterialCommunityIcons 
+                              name="notebook-plus-outline"   
+                              size={size} 
+                              color={color}
+                              />
                             )}
+                            labelStyle={{ marginLeft: -10 }}
                             label="Add Lecture Note"
                             onPress={() => {}}                        />
                       
                         <DrawerItem 
                             icon={({color, size}) => (
-                              <Entypo name="info" size={size} color={color}/>
+                              <Entypo 
+                              name="info" 
+                              size={size} 
+                              color={color}
+                              />
                             )}
+                            labelStyle={{ marginLeft: -10 }}
                             label="About us"
                             onPress={() => {}}                        />
                     </Drawer.Section>
-                    <Drawer.Section title="Preferences">
+                    <Drawer.Section 
+                    title="Preferences"
+                    >
                         <TouchableRipple onPress={() => {}} >
                         <View style={styles.preference}>
                                 <Text>Dark Theme</Text>
@@ -135,10 +163,13 @@ export function CustomSideMenu(props) {
                     </Drawer.Section>
                 </View>
             </DrawerContentScrollView>
-            <Drawer.Section  style={styles.bottomDrawerSection}>
+            <Drawer.Section  
+            showDivider={false}
+            style={styles.bottomDrawerSection}>
                 <DrawerItem 
+                labelStyle={{ marginLeft: -10, color: 'black' }}
                     icon={({color, size}) => (
-                      <Ionicons name="exit-outline" size={size} color={color}/>
+                      <Ionicons name="exit-outline" size={size} color={'black'}/>
                     )}
                     label="Sign Out"
                     onPress={() => {
@@ -185,18 +216,17 @@ const styles = StyleSheet.create({
       marginRight: 3,
     },
     drawerSection: {
-      marginTop: 15,
+      marginTop: 20
     },
     bottomDrawerSection: {
-        marginBottom: 15,
-        borderTopColor: '#f4f4f4',
-        borderTopWidth: 1,
-        
+        marginBottom: 20,
+        paddingHorizontal: 15,
+        backgroundColor: colors.extraLightGrey
     },
     preference: {
       flexDirection: 'row',
+      alignItems: 'center',
       justifyContent: 'space-between',
-      paddingVertical: 12,
-      paddingHorizontal: 16,
+      paddingHorizontal: 24,
     },
   });

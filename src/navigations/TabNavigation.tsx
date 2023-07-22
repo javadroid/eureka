@@ -17,64 +17,89 @@ import { FontAwesome } from '@expo/vector-icons';
 import TimeTable from '../screens/Timetable/TimeTable'
 import { AntDesign } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import colors from '../constants/colors';
+
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator()
+
 export default function TabNavigation() {
-
   return (
-
-    <Tab.Navigator screenOptions={{
+    
+    <Tab.Navigator 
+    screenOptions={{
       headerShadowVisible: false,
       headerTransparent: true, headerTitleAlign: 'center',
       tabBarShowLabel: false,
       headerShown: false,
       tabBarHideOnKeyboard: true,
-      // tabBarBackground:'red',
       tabBarStyle: {
-        height: 50,
-       
-                // backgroundColor: 'black',
-                elevation: 2,
-
-        // width:'100%'
+      height: 50,
+      elevation: 2,
       }
-
     }}>
-      <Tab.Screen options={{
+      <Tab.Screen 
+      options={{
         headerTitle: '',
         headerShown: false,
-        tabBarIcon: ({ color, size }) => <AntDesign name="home" size={size} color={color} />
-      }} name='StudentDashboard' component={DashboardFlow} />
+        tabBarIcon: ({ color, size, focused }) => 
+        <AntDesign 
+        name="home" 
+        size={size} 
+        color={ focused ? colors.primaryHover : colors.grey } 
+        />
+      }} 
+      name='StudentDashboard' 
+      component={DashboardFlow} 
+      />
 
-      <Tab.Screen options={{
+      <Tab.Screen 
+      options={{
+        tabBarIcon: ({ color, size, focused }) => 
+        <MaterialCommunityIcons 
+        name="robot-happy-outline" 
+        size={size} 
+        color={focused ? colors.primaryHover : colors.grey} 
+        />
+      }} 
+      name='chatGPT' 
+      component={ChatGPT} 
+      />
 
-        tabBarIcon: ({ color, size }) => <MaterialCommunityIcons name="robot-happy-outline" size={size} color={color} />
-      }} name='chatGPT' component={ChatGPT} />
-
-      <Tab.Screen options={{
+      <Tab.Screen 
+      options={{
         tabBarIcon: ({ color, size }) => <ImageIconPQ />
       }}
-        name='YearList' component={PQFlow} />
+      name='YearList' 
+      component={PQFlow} 
+      />
 
-      <Tab.Screen options={{
-        tabBarIcon: ({ color, size }) => <FontAwesome name="pencil-square-o" size={size} color={color}/>
-      }} name='LectureNoteFlows' component={LectureNoteFlows} />
+      <Tab.Screen 
+      options={{
+        tabBarIcon: ({ color, size, focused }) => 
+        <FontAwesome 
+        name="pencil-square-o" 
+        size={size} 
+        color={focused ? colors.primaryHover : colors.grey}
+        />
+      }} 
+      name='LectureNoteFlows' 
+      component={LectureNoteFlows} 
+      />
 
-
-
-
-
-
-      <Tab.Screen options={{
-
-        tabBarIcon: ({ color, size }) => <Ionicons name="md-chatbubbles-outline" size={25} color={color} />
-      }} name='ChatList' component={ChatList} />
-
+      <Tab.Screen 
+      options={{
+        tabBarIcon: ({ color, size, focused }) => 
+        <Ionicons 
+        name="md-chatbubbles-outline" 
+        size={25} 
+        color={focused ? colors.primaryHover : colors.grey} 
+        />
+      }} 
+      name='ChatList' 
+      component={ChatList} 
+      />
 
     </Tab.Navigator>
-
-
-
   )
 }

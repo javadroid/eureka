@@ -22,22 +22,31 @@ const [isExpanded, setisExpanded] = useState(false)
     }
     const NewView=!isExpanded?Pressable:View
     return (
-        <NewView onPress={HandlePress} style={{ ...styles.container, ...{ marginTop: itemData.index === 0 ? 0 : 15 } }}>
+        <NewView 
+        onPress={HandlePress} 
+        style={{ ...styles.container, ...{ marginTop: itemData.index === 0 ? 0 : 15 } }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.title}>{itemData.item.title}</Text>
-                <TouchableOpacity onPress={()=>HandleExpand()}>
+                <TouchableOpacity onPress={() => HandleExpand()}>
                     <Entypo name={isExpanded ? "chevron-small-up" : "chevron-small-down"} size={24} color="black" />
                 </TouchableOpacity>
             </View>
 
             <View style={{ flexDirection: 'row' }} >
                 <FontAwesome name="book" size={20} color={colors.textColor} />
-                <Text style={styles.caption}>{itemData.item.caption}</Text>
+                <Text style={[styles.caption, { color: isExpanded ? colors.textColor : colors.grey }]}>{itemData.item.caption}</Text>
 
             </View>
             {isExpanded  && (
                 <View style={{ maxHeight: 200, flexShrink: 1 }} >
-                    <FlatList  nestedScrollEnabled={false}  data={itemData.item.topics} renderItem={ExplandedItem} />
+                    <FlatList  
+                    showsVerticalScrollIndicator={false}
+                    ListHeaderComponent={<View style={{ height: 4 }} />}
+                    ListFooterComponent={<View style={{ height: 5 }} />}
+                    nestedScrollEnabled={false}  
+                    data={itemData.item.topics} 
+                    renderItem={ExplandedItem} 
+                    />
                 </View>
             )}
 
@@ -47,7 +56,10 @@ const [isExpanded, setisExpanded] = useState(false)
 const ExplandedItem = (itemData) => {
     return (
         <>
-            <TouchableOpacity style={{ flexShrink: 1, paddingHorizontal: 10, paddingVertical: 2 }}>
+            <TouchableOpacity 
+            activeOpacity={0.8}
+            style={styles.expanded}>
+                <Text style={{ color: colors.textColor, marginTop: 1.4 }} >●</Text>
                 <Text style={{ ...styles.caption, flexShrink: 1 }}>{itemData.item}</Text>
             </TouchableOpacity>
         </>
@@ -55,21 +67,30 @@ const ExplandedItem = (itemData) => {
 }
 const styles = StyleSheet.create({
     container: {
-        marginVertical: 15,
-        display: 'flex',
+        marginVertical: 13.5,
         backgroundColor: 'white',
-        borderRadius: 10,
+        borderRadius: 22,
         borderColor: colors.primaryHover,
-        padding: 13,
-        borderBottomWidth: 1,
+        borderWidth: 1,
+        paddingRight: 13,
+        paddingTop: 14,
+        paddingBottom: 21,
+        paddingLeft: 16,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+        elevation: 2,
         // minHeight:120
-
     },
     title: {
         fontFamily: 'bold',
         fontSize: fontSize.title.fontSize,
         lineHeight: fontSize.title.lineHeight,
-        color: colors.textTitle,
+        color: colors.textColor,
         marginBottom: 20,
 
     },
@@ -79,6 +100,11 @@ const styles = StyleSheet.create({
         lineHeight: fontSize.body.lineHeight,
         color: colors.textColor,
         marginLeft: 10,
-
     },
+    expanded: {
+        flexShrink: 1, 
+        flexDirection: 'row',
+        paddingHorizontal: 10, 
+        paddingVertical: 4
+    }
 })

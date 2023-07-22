@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     // borderBottomWidth:1,
     alignItems: 'center',
     minHeight: 50,
-
+    marginLeft: 5
   },
   textContainer: {
     marginLeft: 5,

@@ -69,7 +69,6 @@ const [loading, setLoading] = useState(true)
     const { y } = event.nativeEvent.contentOffset;
     if (y >= 300) {
       setHideTrending(false);
-   
     } else {
       setHideTrending(true)
     }
@@ -85,8 +84,8 @@ const [loading, setLoading] = useState(true)
     <CustomPageCointainer edgeTop={'top'} style={styles.container}>
       <HeaderMenu  navigation={navigation} />
 
-
       <View style={styles.timeTableContainer}>
+
         <View style={{ flex: 1, }}>
           <Text style={styles.today}>{new Date().toDateString()}</Text>
 
@@ -101,6 +100,7 @@ const [loading, setLoading] = useState(true)
           </View>
 
         </View>
+
         <View style={{ flex: 1, paddingLeft: 20, justifyContent: 'flex-end', paddingRight: 10, }}>
           <Text style={styles.currentTaskName}>{'Introduction to computer science'}</Text>
           <Text style={styles.currentTaskCode}>{'CSC 101'}</Text>
@@ -124,30 +124,49 @@ const [loading, setLoading] = useState(true)
 
             </View>
           </View>
-
-
         </View>
+
       </View>
 
-     
-       
-          <CustomHeader style={{ ...styles.headerTitle, ...{ marginTop: 10, } }} label='Trending Now' />
-          <View style={viewStyle}>
-            <FlatList data={[{ img: download, title: "Potter explains what $89m Mudryk will bring to Chelsea &..." }, {}]} horizontal showsHorizontalScrollIndicator={false} renderItem={(item) => TrendingList(width, height, item,navigation,'NewsPage',)} />
-          </View>
-      <CustomHeader style={{ ...styles.headerTitle, ...{ marginTop: 10, } }} label="New's Update" />
+      <CustomHeader 
+      style={{ ...styles.headerTitle, ...{ marginTop: 10, } }} 
+      label='Trending Now' 
+      />
+
+      <View style={viewStyle}>
+        <FlatList 
+        data={[{ img: download, title: "Potter explains what $89m Mudryk will bring to Chelsea &..." }, {}]} 
+        horizontal 
+        showsHorizontalScrollIndicator={false} 
+        renderItem={(item) => TrendingList(width, height, item,navigation,'NewsPage',)} 
+        />
+      </View>
+
+      <CustomHeader 
+      style={{ ...styles.headerTitle, ...{ marginTop: 10, } }} 
+      label="New's Update" 
+      />
+
       <View style={styles.newsContainer}>
-        <FlatList  ref={scrollViewRef} onScroll={handleScroll} scrollEventThrottle={16} data={[
+        <FlatList  
+        ref={scrollViewRef} 
+        onScroll={handleScroll} 
+        scrollEventThrottle={16} 
+        data={[
           { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
           { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
           { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
           { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() },
           { img: download, category: "Sport", title: "Potter explains what $89m Mudryk will bring to Chelsea &...", date: new Date().toDateString() }
-        ]} showsVerticalScrollIndicator={false} 
+        ]} 
+        showsVerticalScrollIndicator={false} 
         renderItem={(item) => {
-          
           return(
-            <NewsList itemData={item}navigation={navigation} navigate={'NewsPage'}/>
+            <NewsList 
+            itemData={item}
+            navigation={navigation} 
+            navigate={'NewsPage'}
+            />
          )
          }}/>
 
@@ -258,7 +277,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 40,
     padding: 20,
-
     borderBottomWidth: 0.51,
     borderRadius: 20,
     borderBottomColor: colors.background
@@ -289,9 +307,6 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingBottom: 100,
     borderRadius: 20,
-
-
-
   },
   trendingHeader: {
     fontFamily: 'interSemiBold',
@@ -300,8 +315,6 @@ const styles = StyleSheet.create({
     color: 'black',
     width: '80%',
     marginTop: 10,
-
-
   },
   newsContainer: {
     // flex: 1,
@@ -311,7 +324,6 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     flexShrink: 1,
     // width:'100%'
-
   },
   newsCard: {
     display: 'flex',
@@ -321,8 +333,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: colors.background,
-
-
     marginBottom: 20,
     //  backgroundColor: 'red',
   },

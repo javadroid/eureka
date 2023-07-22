@@ -6,29 +6,28 @@ import Register from '../screens/Register'
 import Profile from '../screens/Profile'
 import { useSelector } from 'react-redux'
 
-
 const Stack = createNativeStackNavigator()
-export default function MainNavigation() {
 
- 
+export default function MainNavigation() {
   return (
     <Stack.Navigator initialRouteName={'Home'}>
       <Stack.Group screenOptions={{ headerShadowVisible: false }}>
-        <Stack.Screen name='Home' component={TabNavigation} options={{
+        <Stack.Screen 
+        name='Home' 
+        component={TabNavigation} 
+        options={{
           headerShown: false
         }} />
       </Stack.Group>
 
-      
         <Stack.Screen options={{
             headerTitle: '',
             headerTitleAlign: 'center',
             headerTransparent:true
-          }} name='Profile' component={Profile} />
+          }} name='Profile' component={Profile} 
+        />
 
-
- 
-</Stack.Navigator>
+    </Stack.Navigator>
   )
 }
 

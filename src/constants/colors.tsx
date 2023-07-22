@@ -11,6 +11,7 @@ export default {
      primaryHover:'#79407E',
      primaryInactive:'#F5BBFA',
      black:'#292D32',
+     neBlack: '#000000',
      backgroundWhite:'#F5F5F5',
      beign:"#fef5c3",
      errors:"#C03A13",

@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsAuthenticated, setUserToken } from '../utils/store/userSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { async } from 'validate.js';
+import colors from '../constants/colors';
 
 
 const initialState = {
@@ -57,29 +58,32 @@ export default function Login({  }) {
        
     const onChangeTextHandler = useCallback((inputId: any, inputValue: any) => {
         const result = (FormActions(inputId, inputValue))
-       
         dispatchFormState({ inputId, validationResult: result, inputValue })
     }, [dispatchFormState])
 
     const HandleSubmit = useCallback(async (data) => {
+        setLoading(true)
+        // console.log(data)
         setErrorMatric("")
         setErrorPassword("")
         const result = await login('students', data)
             .catch((err: AxiosError) => {
-                
                 if(err.response?.data['error']==="Not Found"){
                     setErrorMatric("Matric Number Not Found")
-                    
+                    setLoading(false)
                 }else if(err.response?.data['error']==="Unauthorized"){
                     setErrorPassword("Wrong Password")
+                    setLoading(false)
                 }else{
                     setErrorPassword("Something went wrong")
+                    setLoading(false)
                 }
             });
-         // console.log("login user id",result)
+         console.log("login user id",result)
       if(result){
          setlocalRedux({key:"userToken",data:result,dispatch,method:setUserToken})
          setlocalRedux({key:"isAuthenticated",data:true,dispatch,method:setIsAuthenticated})
+         setLoading(false)
         // navigation.navigate("Home")
       }
        
@@ -93,12 +97,43 @@ export default function Login({  }) {
                 </View>
                 <View style={styles.container}>
                     <View style={styles.loginContainer} >
-                        <CustomInputText id='matricNo' errorText={formState.inputValidities['matricNo'] || errorMatric} initialValue={formState.inputValue['matricNo']} onChangeText={onChangeTextHandler} style={{ marginBottom: 30 }} label='Matric Number' />
-                        <CustomInputText id='password' errorText={formState.inputValidities['password'] || errorPassword} initialValue={formState.inputValue['password']} onChangeText={onChangeTextHandler} style={{ marginBottom: 30 }} label='Password' placeholder='******' password={true} />
+
+                        <CustomInputText 
+                        id='matricNo' 
+                        errorText={formState.inputValidities['matricNo'] || errorMatric} 
+                        initialValue={formState.inputValue['matricNo']} 
+                        onChangeText={onChangeTextHandler} 
+                        style={{ marginBottom: 30 }} 
+                        label='Matric Number' 
+                        />
+
+                        <CustomInputText 
+                        id='password' 
+                        errorText={formState.inputValidities['password'] || errorPassword} 
+                        initialValue={formState.inputValue['password']} 
+                        onChangeText={onChangeTextHandler} 
+                        style={{ marginBottom: 30 }} 
+                        label='Password' 
+                        placeholder='******' 
+                        password={true} 
+                        />
+
                         <View style={{ marginBottom: 10 }}>
                             <Text>Forgot Password </Text>
                         </View>
-                        <CustomButtonSubmit onPress={()=>HandleSubmit(formState.inputValue)} disabled={!formState.formValid} style={{ marginBottom: 30 }} lable='Login' />
+
+                        <CustomButtonSubmit 
+                        onPress={() => {
+                            loading
+                            ?
+                            {}
+                            :
+                            HandleSubmit(formState.inputValue)
+                        }} 
+                        disabled={!formState.formValid} 
+                        style={{ marginBottom: 30 }} 
+                        lable={ loading ? 'Loading' : 'Login' } 
+                        />
                         {/* <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{ alignItems: 'center', }}>
                             <Text>Don't have an account? Sign up😎 </Text>
                         </TouchableOpacity> */}
@@ -122,12 +157,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-
     },
     loginContainer: {
-
         width: '100%',
-        padding: 20
-
+        padding: 20,
     },
 });

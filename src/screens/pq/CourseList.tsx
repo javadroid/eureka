@@ -43,51 +43,79 @@ export default function CourseList({ navigation, isCustomHeader = true, isSearch
         <>
          
          
-            <FloatingButton item={floatingButtonItem} />
+            {/* <FloatingButton item={floatingButtonItem} /> */}
             
-            <CustomPageCointainer style={{ display: 'flex' }} edgeTop={'top'} >
+            <CustomPageCointainer style={{ flex: 1 }} edgeTop={'top'} >
                 <HeaderMenu navigation={navigation} />
 
                 {isCustomHeader && <CustomHeader style={{ ...styles.headerTitle, ...{} }} label='Search for courses' />}
 
                 {isSearchBox &&
                     <View style={{ ...styles.searchBox, ...{ marginTop: isCustomHeader ? 18 : 60 } }}>
-                        <Feather name="search" size={24} color="white" />
-                        <TextInput placeholderTextColor={'white'} placeholder='Courses' style={styles.searchText} />
-                    </View>}
+                        <Feather 
+                        name="search" 
+                        size={24} 
+                        color="white" 
+                        />
+                        <TextInput 
+                        placeholderTextColor={colors.extraLightGrey} 
+                        placeholder='Courses' 
+                        cursorColor={'white'}
+                        style={styles.searchText} 
+                        />
+                    </View>
+                }
 
-                <Modal animationType='slide'
-                    transparent={true}
-                   
-                    // style={{ width: 'auto', height: 'auto' }}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        
-                        setModalVisible(!modalVisible);
-                    }}>
-                    <Pressable onPress={()=> setModalVisible(false)} style={styles.centeredView}>
-                        <Pressable onPress={()=> {}} style={styles.modalView}>
+                <Modal 
+                animationType='fade'
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {setModalVisible(!modalVisible)}}
+                >
+                    <Pressable 
+                    onPress={() => setModalVisible(false)} 
+                    style={styles.centeredView}
+                    >
+                        <Pressable 
+                        onPress={() => {}} 
+                        style={styles.modalView}
+                        >
                             <Text style={styles.modalViewHeaderText}>Choose question type</Text>
 
                             <View style={styles.modalButtons}>
-                                <TouchableOpacity style={styles.Button} onPress={() => {
+                                <TouchableOpacity 
+                                activeOpacity={0.6}
+                                style={styles.Button} 
+                                onPress={() => {
                                     // setModalVisible(!modalVisible);
                                 }}>
                                     <Text style={styles.modalButtonText}>
                                         Test
                                     </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.Button} onPress={HandleExam}>
+                                <TouchableOpacity 
+                                activeOpacity={0.6}
+                                style={styles.Button} 
+                                onPress={HandleExam}
+                                >
                                     <Text style={styles.modalButtonText}>
                                         Exam
                                     </Text>
                                 </TouchableOpacity>
                             </View>
+
                         </Pressable>
                     </Pressable>
 
                 </Modal>
-                <FlatList data={data} renderItem={(item) => ItemList(item, navigation, undefined, {}, setModalVisible)} />
+
+                <FlatList 
+                data={data} 
+                ListHeaderComponent={<View style={{ height: 22 }} />}
+                ListFooterComponent={<View style={{ height: 50 }} />}
+                showsVerticalScrollIndicator={false}
+                renderItem={(item) => ItemList(item, navigation, undefined, {}, setModalVisible)} 
+                />
 
                
 
@@ -104,25 +132,31 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: colors.primaryHover,
         padding: 10
-
     },
     headerTitle: {
-        marginTop: 70,
+        marginTop: 68,
         fontFamily: 'bold',
-        fontSize: fontSize.title.fontSize,
+        fontSize: fontSize.title2.fontSize,
         lineHeight: fontSize.title.lineHeight,
         color: colors.textColor,
         // alignSelf:'center',
     },
     searchBox: {
-        display: 'flex',
         borderRadius: 25,
         backgroundColor: colors.primaryHover,
         paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingVertical: 10,
         flexDirection: 'row',
         width: '100%',
-        marginBottom: 30,
+        marginBottom: 10,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+        elevation: 2,
     },
     searchText: {
         color: 'white',
@@ -164,14 +198,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-      
     },
     modalView: {
-        // margin: 20,
         backgroundColor: colors.primaryHover,
-        
-        padding: 40,
-        // alignItems: 'center',
+        paddingVertical: 30,
+        paddingHorizontal: 40,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -180,25 +211,27 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        borderRadius: 10,
+        marginBottom: 24
     },
     modalViewHeaderText: {
         fontFamily: 'bold',
         fontSize: fontSize.title.fontSize,
         lineHeight: fontSize.title.lineHeight,
         color: "white",
-        marginBottom: 30,
+        marginBottom: 25,
     },
     modalButtons: {
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         flexDirection: 'row',
-        // width:'100%',
+        gap: 20
+        // width:'80%',
     },
     Button: {
         backgroundColor: 'white',
         borderRadius: 24,
         paddingVertical: 12,
-        paddingHorizontal: 16,
-        display: 'flex',
+        paddingHorizontal: 24,
         justifyContent: 'center',
         alignItems: 'center',
     },

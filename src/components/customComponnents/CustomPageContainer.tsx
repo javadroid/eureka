@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../constants/colors';
 import { LinearGradient } from 'expo-linear-gradient';
 import HeaderBackground from '../header/HeaderBackground';
+import { Portal, Provider } from 'react-native-paper';
 
 const colorsLinearGradient = [
   'rgba(245, 187, 250, 0.29)',
@@ -14,22 +15,15 @@ const colorsLinearGradient = [
   'rgba(255, 255, 255, 0.84049)',
   '#F7E9F8'
 ];
-export default function CustomPageCointainer({edgeTop=''as any,style={},children=undefined as any}) {
-   return (
+export default function CustomPageCointainer({ edgeTop = '' as any, style = {}, children = undefined as any }) {
+  return (
 
+    <SafeAreaView edges={['right', 'left', 'bottom', edgeTop]} style={{ ...styles.container, ...style as StyleSheet }}>
+      
+          {children}
+         
+    </SafeAreaView>
 
-
-    <LinearGradient colors={colorsLinearGradient} style={{ flex : 1 }}
-      start={[0, 0]}
-      end={[1, 1]}
-      locations={[0, 0.196, 0.4543, 0.7127, 0.9711, 1.2295]}
-    >
-      <SafeAreaView edges={ ['right', 'left', 'bottom',edgeTop]} style={{...styles.container, ...style }}>
-
-        {children}
-      </SafeAreaView>
-
-    </LinearGradient >
 
   )
 }
@@ -38,8 +32,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    paddingHorizontal: 19,
-    // backgroundColor:() =><HeaderBackground/>
-   
+    paddingHorizontal: 20,
+    backgroundColor: colors.background
+
   }
 });

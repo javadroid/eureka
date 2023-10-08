@@ -15,10 +15,10 @@ import { setUserToken, setIsAuthenticated, setUserData } from '../utils/store/us
 
 SplashScreen.preventAutoHideAsync()
 export default function FontsLoader() {
-    const [appIsLoaded, setAppIsLoaded] = useState(false)
+    const [appIsLoaded, setAppIsLoaded] = useState(true)
     const dispatch = useDispatch()
-    const isAuthenticated= useSelector((state:any)=> state.user.isAuthenticated)
-    
+    const isAuthenticated = useSelector((state: any) => state.user.isAuthenticated)
+
     useEffect(() => {
         InternetStatus(dispatch)
 
@@ -27,10 +27,10 @@ export default function FontsLoader() {
     }, [])
     const prepareFont = async () => {
         try {
-            
-                dispatch(setUserToken({userToken: JSON.parse(await AsyncStorage.getItem('userToken')) }))
-                dispatch(setIsAuthenticated({isAuthenticated: JSON.parse(await AsyncStorage.getItem('isAuthenticated')) }))
-                dispatch(setUserData({userData: JSON.parse(await AsyncStorage.getItem('userData')) }))
+
+            dispatch(setUserToken({ userToken: JSON.parse(await AsyncStorage.getItem('userToken')) }))
+            dispatch(setIsAuthenticated({ isAuthenticated: JSON.parse(await AsyncStorage.getItem('isAuthenticated')) }))
+            dispatch(setUserData({ userData: JSON.parse(await AsyncStorage.getItem('userData')) }))
             await Font.loadAsync({
                 "black": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-Black.ttf"),
                 "blackItalic": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-BlackItalic.ttf"),
@@ -45,11 +45,11 @@ export default function FontsLoader() {
                 "regular": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-Regular.ttf"),
                 "SemiBold": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-SemiBold.ttf"),
                 "SemiBoldItalic": require("../../assets/fonts/Nunito-Sans-Font/NunitoSans-SemiBoldItalic.ttf"),
-                
+
                 "interBlack": require("../../assets/fonts/Inter/Inter-Black.ttf"),
                 "interBold": require("../../assets/fonts/Inter/Inter-Bold.ttf"),
                 "interLight": require("../../assets/fonts/Inter/Inter-Light.ttf"),
-                 "interExtraLight": require("../../assets/fonts/Inter/Inter-ExtraLight.ttf"),
+                "interExtraLight": require("../../assets/fonts/Inter/Inter-ExtraLight.ttf"),
                 "interExtraBold": require("../../assets/fonts/Inter/Inter-ExtraBold.ttf"),
                 "interRegular": require("../../assets/fonts/Inter/Inter-Regular.ttf"),
                 "interSemiBold": require("../../assets/fonts/Inter/Inter-SemiBold.ttf"),
@@ -72,24 +72,16 @@ export default function FontsLoader() {
         [appIsLoaded],
     )
 
-    const colors = [
-        'rgba(245, 187, 250, 0.29)',
-        'rgba(255, 255, 255, 0.55)',
-        'rgba(254, 249, 255, 0.987114)',
-        'rgba(255, 255, 255, 0.949964)',
-        'rgba(255, 255, 255, 0.84049)',
-        '#F7E9F8'
-    ];
     if (!appIsLoaded) {
         return null
     } else {
 
         return (
-        
-                <SafeAreaProvider style={{ flex: 1 }} onLayout={onLayOut}>
-                    <AppNavigation />
-                </SafeAreaProvider>
-          
+
+            <SafeAreaProvider style={{ flex: 1 }} onLayout={onLayOut}>
+                <AppNavigation />
+            </SafeAreaProvider>
+
 
         )
     }

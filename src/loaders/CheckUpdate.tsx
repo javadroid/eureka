@@ -12,6 +12,7 @@ import { AxiosError } from 'axios';
 import setlocalRedux from '../utils/localRedux';
 import { profile, findById } from '../utils/service/ApiService';
 import CheckUserData from './CheckUserData';
+import AuthNavigation from '../navigations/AuthNavigation';
 
 export default function CheckUpdate() {
   const dispatch = useDispatch()
@@ -49,8 +50,8 @@ export default function CheckUpdate() {
   
   return (
     <>
-  {isAuthenticated?<CheckUserData/>:<Login/>}
-     
+  {/* {isAuthenticated?<CheckUserData/>:<Login/>} */}
+  <AuthNavigation/>
     </>
 
   )

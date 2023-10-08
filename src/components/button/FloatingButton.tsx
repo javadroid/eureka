@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     floatContainer: {
         zIndex: 1,
         position: 'absolute',
-
+        backgroundColor: colors.primaryHover,
         alignSelf: 'flex-end',
         margin: 20,
         bottom: 50,

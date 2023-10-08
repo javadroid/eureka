@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableWithoutFeedback, Modal, Alert } from 'react-native'
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Modal, Alert, Keyboard } from 'react-native'
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import CustomPageCointainer from '../components/customComponnents/CustomPageContainer';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -18,7 +18,11 @@ import { addStudent } from '../utils/service/ApiService';
 import { AxiosError } from 'axios';
 import setlocalRedux from '../utils/localRedux';
 import { setUserToken, setIsAuthenticated } from '../utils/store/userSlice';
-
+import CustomPaperInputText from '../components/customComponnents/CustomPaperInputText';
+import { TouchableOpacity } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import colors from '../constants/colors';
+import CustomPaperModal from '../components/customComponnents/CustomPaperModal';
 const initialState = {
     inputValue: {
         fullname: "",
@@ -29,10 +33,10 @@ const initialState = {
         dob: "",
         email: "",
         password: "",
-        faculty: "",
-        department: "",
-        level:""
- 
+        // faculty: "",
+        // department: "",
+        // level: ""
+
     },
     inputValidities: {
         fullname: false,
@@ -43,73 +47,208 @@ const initialState = {
         dob: false,
         email: false,
         password: false,
-        faculty: false,
-        department: false,
-        level:false
+        // faculty: false,
+        // department: false,
+        // level: false
     },
     formValid: false
 }
 
-export default function Register({navigation }) {
+export default function Register({ navigation }) {
     const [formState, dispatchFormState] = useReducer(formReducer, initialState)
-    
+
     const [loading, setLoading] = useState(false);
-const [error,setError]=useState('')
+    const [error, setError] = useState('')
+    const [page, setPage] = useState(1)
     const pickerGenderRef = useRef<any>(null);
     const pickerFacultyRef = useRef<any>(null);
     const pickerLevelRef = useRef<any>(null);
     const pickerDepartmentRef = useRef<any>(null);
+    const [active, setactive] = useState(false)
 
     const onChangeTextHandler = useCallback((inputId: any, inputValue: any) => {
         const result = (FormActions(inputId, inputValue))
         // console.log(result, inputId)
         dispatchFormState({ inputId, validationResult: result, inputValue })
         // console.log(formState.inputValue)
-    }, [dispatchFormState,formState])
+    }, [dispatchFormState, formState])
 
     const HandleSubmit = useCallback(async (data) => {
-   
+
         const result = await addStudent('students', data)
             .catch((err: AxiosError) => {
-             // console.log(err.response?.data)
+                // console.log(err.response?.data)
                 Alert.alert('Error', err.message)
             });
-            // console.log(result)
-      if(result){
-        Alert.alert('Success', 'please wait for confirmation')
-        navigation.navigate("Login")
+        // console.log(result)
+        if (result) {
+            Alert.alert('Success', 'please wait for confirmation')
+            navigation.navigate("Login")
+        }
+
+    }, [dispatchFormState])
+
+    const closePicker = () => {
+        setactive(false)
       }
+      const openPicker = () => {
+        console.log(active)
+        Keyboard.dismiss()
+        setactive(true)
        
-    },[dispatchFormState])
+      }
     return (
         <CustomKeyboardAvoidingView>
             <CustomPageCointainer edgeTop={'top'} style={{ flex: 1 }}>
-                
-                    <CustomHeader style={styles.headerTitle} label=' ' />
-               
-                <ScrollView style={{}}>
+            {active && (
+       <CustomPaperModal closePicker={closePicker}>
+        <Text>sdfs</Text>
+       </CustomPaperModal>
+
+      )}
+                <View style={styles.container}>
+                    <Text style={{
+                        ...styles.font,
+                        fontFamily: "bold",
+                        fontSize: fontSize.bodyLarge.fontSize,
+                        lineHeight: fontSize.bodyLarge.lineHeight,
+                        letterSpacing: 0.3,
+                    }} >SIGN UP</Text>
                     <View style={styles.registerContainer} >
-                        <CustomInputText errorText={formState.inputValidities['matricNo']} initialValue={formState.inputValue['matricNo']} onChangeText={onChangeTextHandler} style={{ marginBottom: 0 }} id='matricNo' label='Matric Number' />
-                        <CustomInputText errorText={formState.inputValidities['fullname']} initialValue={formState.inputValue['fullname']} onChangeText={onChangeTextHandler} style={{ marginBottom: 0, }} textContentType='name' id='fullname' label='Full Name' />
-                        <CustomInputText errorText={formState.inputValidities['username']} initialValue={formState.inputValue['username']} onChangeText={onChangeTextHandler} style={{ marginBottom: 0 }} textContentType={'username'} id='username' label='Username' />
-                        <CustomInputText errorText={formState.inputValidities['email']} initialValue={formState.inputValue['email']} onChangeText={onChangeTextHandler} style={{ marginBottom: 0 }} textContentType='emailAddress' keyboardType={'email-address'} id='email' label='Email' />
-                        <CustomInputText errorText={formState.inputValidities['phoneNo']} initialValue={formState.inputValue['phoneNo']} onChangeText={onChangeTextHandler} style={{ marginBottom: 0 }} textContentType={'telephoneNumber'} keyboardType={'phone-pad'} id='phoneNo' label='Phone Number' />
-                       
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>
-                            <CustomInputText errorText={formState.inputValidities['dob']} initialValue={formState.inputValue['dob']} onChangeText={onChangeTextHandler} onPress={true} styleContainer={{width:'50%'}}  editable={false} id='dob' style={{ marginBottom: 0, }} label='Date of Birth' />
-                            <CustomInputText errorText={formState.inputValidities['gender']} initialValue={formState.inputValue['gender']} onChangeText={onChangeTextHandler} items={['d', 'ds']} editable={false} pickerRef={pickerGenderRef} id='gender' style={{ marginBottom: 0 }} label='Gender' />
+                        {
+                            page === 1 ? (
+                                <>
+                                    <CustomPaperInputText
+                                        errorText={formState.inputValidities['fullname']}
+                                        initialValue={formState.inputValue['fullname']}
+                                        onChangeText={onChangeTextHandler}
+                                        styleContainer={{ marginBottom: 20 }}
+                                        textContentType='name'
+                                        id='fullname'
+                                        label='Full Name'
+                                        iconColor={colors.grey45}
+                                        textColor={colors.grey5} />
+
+                                    <CustomPaperInputText
+                                        errorText={formState.inputValidities['username']}
+                                        initialValue={formState.inputValue['username']}
+                                        onChangeText={onChangeTextHandler}
+
+                                        textContentType={'username'}
+                                        id='username' label='Username'
+                                        styleContainer={{ marginBottom: 20 }}
+                                        iconColor={colors.grey45}
+                                        textColor={colors.grey5} />
+
+
+                                    <CustomPaperInputText
+                                        errorText={formState.inputValidities['dob']}
+                                        initialValue={formState.inputValue['dob']}
+                                        onChangeText={onChangeTextHandler} onPress={true}
+                                        styleContainer={{ marginBottom: 20 }} editable={false}
+                                        id='dob'
+                                        label='Date of Birth'
+                                        iconColor={colors.grey45}
+                                        textColor={colors.grey5} />
+                                    <CustomPaperInputText
+                                        errorText={formState.inputValidities['gender']}
+                                        initialValue={formState.inputValue['gender']}
+                                        onChangeText={onChangeTextHandler}
+                                        items={['d', 'ds']} editable={false}
+                                        pickerRef={pickerGenderRef}
+                                        id='gender'
+                                        openPicker={openPicker}
+                                       label='Gender'
+                                        iconColor={colors.grey45}
+                                        textColor={colors.grey5} />
+                                </>
+                            ) : (
+                                <>
+                                    <CustomPaperInputText
+                                        errorText={formState.inputValidities['matricNo']}
+                                        initialValue={formState.inputValue['matricNo']}
+                                        onChangeText={onChangeTextHandler}
+                                        styleContainer={{ marginBottom: 20 }}
+                                        id='matricNo'
+                                        label='Matric Number'
+                                        iconColor={colors.grey45}
+                                        textColor={colors.grey5}
+                                    />
+                                    <CustomPaperInputText
+                                        errorText={formState.inputValidities['email']}
+                                        initialValue={formState.inputValue['email']}
+                                        onChangeText={onChangeTextHandler}
+                                        styleContainer={{ marginBottom: 20 }}
+                                        textContentType='emailAddress'
+                                        keyboardType={'email-address'}
+                                        id='email' label='Email'
+                                        iconColor={colors.grey45}
+                                        textColor={colors.grey5} />
+                                    <CustomPaperInputText
+                                        errorText={formState.inputValidities['phoneNo']}
+                                        initialValue={formState.inputValue['phoneNo']}
+                                        onChangeText={onChangeTextHandler}
+                                        styleContainer={{ marginBottom: 20 }}
+                                        textContentType={'telephoneNumber'}
+                                        keyboardType={'phone-pad'} id='phoneNo'
+                                        label='Phone Number' 
+                                        iconColor={colors.grey45}
+                                        textColor={colors.grey5}/>
+                                    <CustomPaperInputText
+                                        errorText={formState.inputValidities['password']}
+                                        initialValue={formState.inputValue['password']}
+                                        onChangeText={onChangeTextHandler} id='password'
+                                         textContentType={'password'}
+                                        label='Password' placeholder='******' password={true} 
+                                        iconColor={colors.grey45}
+                                       
+                                        textColor={colors.grey5}/>
+
+                                </>
+                            )
+                        }
+
+
+
+                        {/* <CustomPaperInputText items={["f", "dd", "dd"]} styleContainer={{ width: '50%' }} errorText={formState.inputValidities['level']} initialValue={formState.inputValue['level']} onChangeText={onChangeTextHandler} editable={false} pickerRef={pickerLevelRef} id='level' styleContainer={{ marginBottom: 20 }} label='Level' />
+                    <View style={{ display: 'flex', flexDirection: 'row', }}>
+                        <CustomPaperInputText items={["f", "dd"]} styleContainer={{ width: '50%' }} errorText={formState.inputValidities['faculty']} initialValue={formState.inputValue['faculty']} onChangeText={onChangeTextHandler} editable={false} pickerRef={pickerFacultyRef} style={{ marginBottom: 0, }} id='faculty' label='Faculty' />
+                        <CustomPaperInputText items={["f", "dd"]} styleContainer={{ width: '50%' }} errorText={formState.inputValidities['department']} initialValue={formState.inputValue['department']} onChangeText={onChangeTextHandler} editable={false} pickerRef={pickerDepartmentRef} id='department' styleContainer={{ marginBottom: 20 }} label='Department' />
+                    </View>  */}
+
+                        <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
+                            <TouchableOpacity onPress={() => setPage(1)} style={{ marginVertical: 10 }}>
+                                <FontAwesome name="angle-left" size={24} color={page !== 1 ? colors.grey45 : "black"} />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setPage(2)} style={{ marginVertical: 10 }}>
+                                <FontAwesome name="angle-right" size={24} color={page !== 2 ? colors.grey45 : "black"} />
+                            </TouchableOpacity>
                         </View>
-                        <CustomInputText items={["f","dd","dd"]} styleContainer={{ width: '50%' }} errorText={formState.inputValidities['level']} initialValue={formState.inputValue['level']} onChangeText={onChangeTextHandler} editable={false} pickerRef={pickerLevelRef} id='level' style={{ marginBottom: 0 }} label='Level' />
-                        <View style={{ display: 'flex', flexDirection: 'row', }}>
-                            <CustomInputText items={["f","dd"]} styleContainer={{ width: '50%' }} errorText={formState.inputValidities['faculty']} initialValue={formState.inputValue['faculty']} onChangeText={onChangeTextHandler} editable={false} pickerRef={pickerFacultyRef} style={{ marginBottom: 0, }} id='faculty' label='Faculty' />
-                            <CustomInputText items={["f","dd"]} styleContainer={{ width: '50%' }} errorText={formState.inputValidities['department']} initialValue={formState.inputValue['department']} onChangeText={onChangeTextHandler} editable={false} pickerRef={pickerDepartmentRef} id='department' style={{ marginBottom: 0 }} label='Department' />
-                        </View>
-                        <CustomInputText errorText={formState.inputValidities['password']} initialValue={formState.inputValue['password']} onChangeText={onChangeTextHandler} id='password' style={{ marginBottom: 20 }} textContentType={'password'} label='Password' placeholder='******' password={true} />
+
+                        <CustomButtonSubmit
+                            onPress={() => {
+                                page === 1 ? setPage(2) :
+                                    loading ? {} :
+                                        HandleSubmit(formState.inputValue)
+                            }}
+                            disabled={page === 2 ? !formState.formValid : false}
+                            style={{ width: "70%", }}
+                            loading={loading}
+                            lable={page === 1 ? "Next" : 'Register'}
+                        />
+                        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginVertical: 10 }}>
+                            <Text style={{ ...styles.font, }} >You already have an account? Login </Text>
+                        </TouchableOpacity>
                     </View>
-                </ScrollView>
-                <CustomButtonSubmit onPress={()=>HandleSubmit(formState.inputValue)} disabled={!formState.formValid} style={{ marginBottom: 20 }} lable='Register' />
+
+                </View>
+
+
+
             </CustomPageCointainer>
         </CustomKeyboardAvoidingView>
+
+        // <CustomPaperModal/>
     )
 }
 const styles = StyleSheet.create({
@@ -121,10 +260,18 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        // justifyContent: 'center',
-        // alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position:"relative"
     },
     registerContainer: {
-        // width: '100%',
-    },
+        width: '100%',
+        padding: 20,
+        position:"relative"
+    }, font: {
+        fontSize: 12,
+        fontFamily: "regular",
+        color: colors.grey45
+    }
+
 });

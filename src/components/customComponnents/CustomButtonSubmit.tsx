@@ -18,19 +18,22 @@ export default function CustomButtonSubmit({ style = {},
   const styles = StyleSheet.create({
     button: {
       backgroundColor: color,
-      paddingVertical: 8,
+      display:"flex",
+      justifyContent: 'center',
+        alignItems: 'center',
       borderRadius: 8,
-      display: "flex",
+      
+      
       alignSelf: "center"
     },
     lable: {
-      fontFamily: "bold",
-      marginVertical: 8,
-      fontSize: fontSize.bodyLarge.fontSize,
-      lineHeight: fontSize.bodyLarge.lineHeight,
+      fontFamily: "semibold",
+      // marginVertical: 8,
+      fontSize: fontSize.body.fontSize,
+      lineHeight: fontSize.body.lineHeight,
       letterSpacing: 0.3,
-      color: disabled ? colors.grey : "white",
-
+      padding:8,
+      color: disabled ? colors.grey :  colors.grey5,
     },
   });
   return (

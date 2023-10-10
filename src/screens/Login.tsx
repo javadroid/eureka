@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useCallback, useReducer, useState } from 'react'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import CustomPageCointainer from '../components/customComponnents/CustomPageContainer';
-import CustomButtonSubmit from '../components/customComponnents/CustomButtonSubmit';
+
 import fontSize from '../constants/fontSize';
 import CustomKeyboardAvoidingView from '../components/customComponnents/CustomKeyboardAvoidingView';
 import FormActions from '../utils/actions/FormActions';
@@ -14,13 +14,18 @@ import { setIsAuthenticated, setUserToken } from '../utils/store/userSlice';
 import colors from '../constants/colors';
 import CustomPaperInputText from '../components/customComponnents/CustomPaperInputText';
 import { FontAwesome } from '@expo/vector-icons';
+import io from 'socket.io-client';
+import CustomButtonSubmit from '../components/customComponnents/CustomButtonSubmit';
+
+const SOCKET_SERVER_URL = 'http://192.168.1.102:3001';
+
 const initialState = {
     inputValue: {
-        matricNo: "",
+        matric: "",
         password: "",
     },
     inputValidities: {
-        matricNo: false,
+        matric: false,
         password: false,
     },
     formValid: false
@@ -31,36 +36,58 @@ export default function Login({ navigation }) {
     const [errorMatric, setErrorMatric] = useState<null | string>(null);
     const [errorPassword, setErrorPassword] = useState<null | string>(null);
     const [loading, setLoading] = useState(false);
-  
+    const [socket, setSocket] = useState(io(SOCKET_SERVER_URL));
+    // useEffect(() => {
+
+    //     socket.on('connect', () => {
+    //         socket.emit('am_online', { id: 'your_id_here' });
+    //         console.log('Connected to server');
+    //     });
+
+    //     socket.on('users_online', (data) => {
+    //         console.log('Received message:', data);
+    //     });
+       
+    //     return () => {
+    //         socket.disconnect();
+    //         socket.on('disconnect', (a) => {
+    //             socket.emit('am_online', { id: 'your_id_here2' });
+    //         }); 
+    //     };
+    // }, []);
+
+    
     const onChangeTextHandler = useCallback((inputId: any, inputValue: any) => {
         const result = (FormActions(inputId, inputValue))
         dispatchFormState({ inputId, validationResult: result, inputValue })
     }, [dispatchFormState])
     const HandleSubmit = useCallback(async (data) => {
-        setLoading(true)
-        // console.log(data)
-        setErrorMatric("")
-        setErrorPassword("")
-        const result = await login('students', data)
-            .catch((err: AxiosError) => {
-                if (err.response?.data['error'] === "Not Found") {
-                    setErrorMatric("Matric Number Not Found")
-                    setLoading(false)
-                } else if (err.response?.data['error'] === "Unauthorized") {
-                    setErrorPassword("Wrong Password")
-                    setLoading(false)
-                } else {
-                    setErrorPassword("Something went wrong")
-                    setLoading(false)
-                }
-            });
-        console.log("login user id", result)
-        if (result) {
-            setlocalRedux({ key: "userToken", data: result, dispatch, method: setUserToken })
-            setlocalRedux({ key: "isAuthenticated", data: true, dispatch, method: setIsAuthenticated })
-            setLoading(false)
-            // navigation.navigate("Home")
-        }
+        // socket.emit('message', { data: 'Hello, server!' });
+        console.log({data,formState:formState.formValid})
+        // setLoading(true)
+        // // console.log(data)
+        // setErrorMatric("")
+        // setErrorPassword("")
+        // const result = await login('students', data)
+        //     .catch((err: AxiosError) => {
+        //         if (err.response?.data['error'] === "Not Found") {
+        //             setErrorMatric("Matric Number Not Found")
+        //             setLoading(false)
+        //         } else if (err.response?.data['error'] === "Unauthorized") {
+        //             setErrorPassword("Wrong Password")
+        //             setLoading(false)
+        //         } else {
+        //             setErrorPassword("Something went wrong")
+        //             setLoading(false)
+        //         }
+        //     });
+        // console.log("login user id", result)
+        // if (result) {
+        //     setlocalRedux({ key: "userToken", data: result, dispatch, method: setUserToken })
+        //     setlocalRedux({ key: "isAuthenticated", data: true, dispatch, method: setIsAuthenticated })
+        //     setLoading(false)
+        //     // navigation.navigate("Home")
+        // }
     }, [])
     return (
         <CustomKeyboardAvoidingView>
@@ -75,9 +102,9 @@ export default function Login({ navigation }) {
                     }} >SIGN IN</Text>
                     <View style={styles.loginContainer} >
                         <CustomPaperInputText
-                            id='matricNo'
-                            errorText={formState.inputValidities['matricNo'] || errorMatric}
-                            initialValue={formState.inputValue['matricNo']}
+                            id='matric'
+                            errorText={formState.inputValidities['matric'] || errorMatric}
+                            initialValue={formState.inputValue['matric']}
                             onChangeText={onChangeTextHandler}
                             styleContainer={{ marginBottom: 20 }}
                             label='Matric Number'
@@ -106,6 +133,9 @@ export default function Login({ navigation }) {
                         <TouchableOpacity onPress={() => navigation.navigate('Register')} style={{ marginVertical: 10 }}>
                             <Text style={{ ...styles.font, }} >Don't have an account? Register </Text>
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('Verification')} style={{ marginVertical: 10 }}>
+                            <Text style={{ ...styles.font, }} >Verification</Text>
+                        </TouchableOpacity>
                         <CustomButtonSubmit
                             onPress={() => {
                                 loading
@@ -115,7 +145,7 @@ export default function Login({ navigation }) {
                                     HandleSubmit(formState.inputValue)
                             }}
                             disabled={!formState.formValid}
-                            style={{ width: "70%", }}
+                            // style={{ width: "70%", }}
                             loading={loading}
                             lable={'Login'}
                         />

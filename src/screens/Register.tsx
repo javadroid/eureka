@@ -27,9 +27,9 @@ const initialState = {
     inputValue: {
         fullname: "",
         username: "",
-        matricNo: "",
+        matric: "",
         gender: "",
-        phoneNo: "",
+        phone: "",
         dob: "",
         email: "",
         password: "",
@@ -41,9 +41,9 @@ const initialState = {
     inputValidities: {
         fullname: false,
         username: false,
-        matricNo: false,
+        matric: false,
         gender: false,
-        phoneNo: false,
+        phone: false,
         dob: false,
         email: false,
         password: false,
@@ -126,6 +126,7 @@ export default function Register({ navigation }) {
                                         textContentType='name'
                                         id='fullname'
                                         label='Full Name'
+                                        value={formState.inputValue['fullname']}
                                         iconColor={colors.grey45}
                                         textColor={colors.grey5} />
 
@@ -133,7 +134,7 @@ export default function Register({ navigation }) {
                                         errorText={formState.inputValidities['username']}
                                         initialValue={formState.inputValue['username']}
                                         onChangeText={onChangeTextHandler}
-
+                                        value={formState.inputValue['username']}
                                         textContentType={'username'}
                                         id='username' label='Username'
                                         styleContainer={{ marginBottom: 20 }}
@@ -147,6 +148,7 @@ export default function Register({ navigation }) {
                                         onChangeText={onChangeTextHandler} onPress={true}
                                         styleContainer={{ marginBottom: 20 }} editable={false}
                                         id='dob'
+                                        value={new Date(formState.inputValue['dob']).toDateString()}
                                         label='Date of Birth'
                                         iconColor={colors.grey45}
                                         textColor={colors.grey5} />
@@ -165,11 +167,12 @@ export default function Register({ navigation }) {
                             ) : (
                                 <>
                                     <CustomPaperInputText
-                                        errorText={formState.inputValidities['matricNo']}
-                                        initialValue={formState.inputValue['matricNo']}
+                                        errorText={formState.inputValidities['matric']}
+                                        initialValue={formState.inputValue['matric']}
                                         onChangeText={onChangeTextHandler}
                                         styleContainer={{ marginBottom: 20 }}
-                                        id='matricNo'
+                                        id='matric'
+                                        value={formState.inputValue['matric']}
                                         label='Matric Number'
                                         iconColor={colors.grey45}
                                         textColor={colors.grey5}
@@ -182,16 +185,18 @@ export default function Register({ navigation }) {
                                         textContentType='emailAddress'
                                         keyboardType={'email-address'}
                                         id='email' label='Email'
+                                        value={formState.inputValue['email']}
                                         iconColor={colors.grey45}
                                         textColor={colors.grey5} />
                                     <CustomPaperInputText
-                                        errorText={formState.inputValidities['phoneNo']}
-                                        initialValue={formState.inputValue['phoneNo']}
+                                        errorText={formState.inputValidities['phone']}
+                                        initialValue={formState.inputValue['phone']}
                                         onChangeText={onChangeTextHandler}
                                         styleContainer={{ marginBottom: 20 }}
                                         textContentType={'telephoneNumber'}
-                                        keyboardType={'phone-pad'} id='phoneNo'
+                                        keyboardType={'phone-pad'} id='phone'
                                         label='Phone Number' 
+                                        value={formState.inputValue['phone']}
                                         iconColor={colors.grey45}
                                         textColor={colors.grey5}/>
                                     <CustomPaperInputText
@@ -199,9 +204,10 @@ export default function Register({ navigation }) {
                                         initialValue={formState.inputValue['password']}
                                         onChangeText={onChangeTextHandler} id='password'
                                          textContentType={'password'}
+
                                         label='Password' placeholder='******' password={true} 
                                         iconColor={colors.grey45}
-                                       
+                                       value={formState.inputValue['password']}
                                         textColor={colors.grey5}/>
 
                                 </>

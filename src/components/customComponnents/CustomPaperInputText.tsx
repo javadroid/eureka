@@ -34,6 +34,7 @@ export default function CustomPaperInputText({
   mode = 'date',
   styleContainer = {},
   openPicker,
+  value,
 
 
 }) {
@@ -42,14 +43,14 @@ export default function CustomPaperInputText({
   const [secureTextEntry, setsecureTextEntry] = useState(password)
   const [active, setactive] = useState(false)
  
-  const [value, setvalue] = useState(initialValue)
+  // const [value, setvalue] = useState(initialValue)
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   useEffect(() => {
     datePickerVisible
   }, [datePickerVisible])
   const onChangeTextHandler = (inputValue: string) => {
-    setvalue(inputValue)
+    // setvalue(inputValue)
     onChangeText(id, inputValue)
   }
   const handlesecureTextEntry = () => {
@@ -66,19 +67,19 @@ export default function CustomPaperInputText({
   const handleBod = (e, date: Date) => {
     if (mode === 'date') {
       setDatePickerVisible(false)
-      setvalue(date.toDateString())
+      // setvalue(date.toDateString())
       onChangeText(id, date?.toISOString())
     } else if (mode === 'time') {
       setDatePickerVisible(false)
       // console.log(date.getHours())
-      setvalue(date?.toLocaleTimeString())
+      // setvalue(date?.toLocaleTimeString())
       onChangeText(id, date?.toISOString())
     }
 
   }
   const onTouchCancel = () => {
     setDatePickerVisible(false)
-    setvalue('')
+    // setvalue('')
 
   }
   

@@ -13,7 +13,8 @@ export default function CustomButtonSubmit({ style = {},
   color = colors.button1,
   lable = '',
   disabled = false,
-  loading = false
+  loading = false,
+  lableStyles={}
 }) {
   const styles = StyleSheet.create({
     button: {
@@ -45,7 +46,7 @@ export default function CustomButtonSubmit({ style = {},
       style={{ ...styles.button, ...style }}
 
     >
-      <Text style={styles.lable}>{lable}</Text>
+      <Text style={{...styles.lable,...lableStyles}}>{lable}</Text>
     </Button>
   )
 

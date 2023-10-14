@@ -10,6 +10,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setUserToken, setIsAuthenticated, setUserData } from '../utils/store/userSlice';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigation from '../navigations/AuthNavigation';
+import FeedList from '../screens/Feeds/FeedList';
+import * as Linking from 'expo-linking';
+const prefix = Linking.createURL('/');
 
 SplashScreen.preventAutoHideAsync()
 export default function FontsLoader() {
@@ -91,13 +94,16 @@ export default function FontsLoader() {
     if (!appIsLoaded) {
         return null
     } else {
-
+        const linking = {
+            prefixes: [prefix],
+          };
         return (
 
             <SafeAreaProvider style={{ flex: 1 }} onLayout={onLayOut}>
 
-                <NavigationContainer>
+                <NavigationContainer linking={linking}>
                    <AuthNavigation/>
+                   {/* <FeedList/> */}
                 </NavigationContainer>
             </SafeAreaProvider>
 

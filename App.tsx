@@ -17,7 +17,7 @@ export default function App() {
     <Provider store={store}>
       <MenuProvider>
         <FontsLoader/>
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
       </MenuProvider>
     </Provider>
   );

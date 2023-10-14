@@ -12,7 +12,8 @@ export default function CustomText({ style = {},
   text = '',
   fontFamily="regular",
   fontsize= fontSize.body,
-      
+  letterSpacing=0,
+  numberOfLines=0
  
 }) {
   const styles = StyleSheet.create({
@@ -22,13 +23,13 @@ export default function CustomText({ style = {},
       // marginVertical: 8,
       fontSize: fontsize.fontSize,
       lineHeight: fontsize.lineHeight,
-      letterSpacing: 0.3,
+      letterSpacing: letterSpacing,
       padding:8,
       color: color,
     },
   });
   return (
-   <Text style={{...styles.lable,...style}}>{text}</Text>
+   <Text numberOfLines={numberOfLines} style={{...styles.lable,...style}}>{text}</Text>
   )
 
 

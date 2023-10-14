@@ -10,21 +10,23 @@ import { Avatar, Divider, Icon } from 'react-native-elements';
 import { fonts } from 'react-native-elements/dist/config';
 import { TouchableHighlight } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { addThread } from '../../utils/store/ThreadSlice';
 
 
-export default function Feeds({ item, navigation, main = false }) {
-  const [ss, set] = useState(false)
+export default function Feeds({ item, 
+  navigation,
+  hideModal =undefined as any,
+  dispatch=undefined as any
+}) {
+  
   const opPress = (item: any) => {
     console.log("open feed")
-    if (main) {
-
-    } else {
-      navigation.navigate("Feed", { item })
-    }
-
-
+    hideModal&&hideModal()
+    dispatch&& dispatch(addThread({data:item}))
+      navigation.navigate("OpenFeed", { item })
+    
   }
-  const font = main ? fontSize.body : fontSize.caption
+  const font =  fontSize.caption
   return (
 
     <TouchableHighlight onPress={() => opPress(item)}
@@ -33,7 +35,7 @@ export default function Feeds({ item, navigation, main = false }) {
         <View style={{ ...styles.userContainer }}>
           <View style={styles.userDetailsContainer}>
             <Avatar rounded
-              size={main ? 'medium' : 'small'}
+              size={'small'}
               overlayContainerStyle={{ backgroundColor: colors.grey45 }}
               icon={{ name: 'user', type: 'font-awesome' }}
             />
@@ -60,7 +62,7 @@ export default function Feeds({ item, navigation, main = false }) {
         </View>
 
 
-        <CustomText numberOfLines={10} style={main ? { minHeight: "10%" } : {}} letterSpacing={0} fontsize={font} color='white' text={item.tweet} />
+        <CustomText numberOfLines={10} style={ {}} letterSpacing={0} fontsize={font} color='white' text={item.tweet} />
 
         <View style={{ ...styles.FeedsActionContainer, }}>
           <FeedsAction name='heart' type='feather' count='1k' />

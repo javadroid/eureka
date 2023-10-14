@@ -69,7 +69,7 @@ export default function AuthNavigation() {
           headerLeft: () => <Feather onPress={() => navigate.goBack()} style={{ marginRight: 20 }} size={22} color={colors.grey45} name='arrow-left' />
         }}
 
-          name='Feed' component={OpenFeed}
+          name='OpenFeed' component={OpenFeed}
         />
         <Stack.Screen options={{
           headerShown: true,

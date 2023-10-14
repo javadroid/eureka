@@ -12,16 +12,52 @@ import { TouchableHighlight } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 import CustomButtonSubmit from '../../components/customComponnents/CustomButtonSubmit';
+import { FlashList } from '@shopify/flash-list';
+import CustomOptionList from '../../components/customComponnents/CustomOptionList';
+import CustomPaperModal from '../../components/customComponnents/CustomPaperModal';
+import { TouchableOpacity } from 'react-native';
+import { typescale } from '../../constants/Typography';
 
+const dots = [
+  {
+      name: "Link Up",
+      icon: "feather",
+      iconname: "user-plus",
+      action: () => { }
+  },
+  {
+      name: "Message Jack",
+      icon: "feather",
+      iconname: "send",
+      action: () => { }
+  },
+  {
+      name: "Reply Privately",
+      icon: "feather",
+      iconname: "mail",
+      action: () => { }
+  },
+  {
+      name: "Report",
+      icon: "feather",
+      iconname: "flag",
+      action: () => { }
+  },
 
+]
 export default function OneFeed({ item, navigate,  }) {
-  
+  const [visible, setVisible] = useState<string | undefined>();
+ 
+  const hideModal = () => {
+    setVisible(undefined)
+    return true
+};
   const opPress = (item: any) => {
   }
   
   return (
-
-     <View 
+<>
+ <View 
       style={{ marginTop: 10, }}>
       
         <View style={{ ...styles.userContainer }}>
@@ -51,8 +87,13 @@ export default function OneFeed({ item, navigate,  }) {
             </View>
           </View>
 <View style={{display:"flex",flexDirection:"row", alignItems:"center", justifyContent:"center"}}>
+<TouchableOpacity onPress={() => {}}>
     <Text style={{...styles.lable}}>{"Link Up"}</Text>
-      <Entypo name="dots-three-vertical" size={15} color={colors.grey45} />
+    </TouchableOpacity>
+    <TouchableOpacity onPress={() => setVisible("3dots")}>
+      <Entypo  name="dots-three-vertical" size={15} color={colors.grey45} />
+    </TouchableOpacity>
+      
 </View>
         
         </View>
@@ -63,6 +104,15 @@ export default function OneFeed({ item, navigate,  }) {
         
       
     </View>
+
+    {visible === "3dots" && <CustomPaperModal containerstyles={{marginBottom: 0,}} modalstyle={{ minHeight: "40%", marginTop: 20, marginLeft: 10, }} modalPage={{ minHeight: "40%", }} hideModal={hideModal}>
+
+                <FlashList estimatedItemSize={10} data={dots} renderItem={(props) => <CustomOptionList  {...props} />} />
+
+
+            </CustomPaperModal>}
+</>
+    
 
    
   )
@@ -88,17 +138,12 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 20,
     position: "relative"
-  }, font: {
-    fontSize: 12,
-    fontFamily: "regular",
-    color: colors.grey45
-  },
+  }, 
   lable: {
     fontFamily: "bold",
     backgroundColor:"white",
-    fontSize: fontSize.caption.fontSize,
-    // lineHeight: fontSize.caption.lineHeight,
-    marginRight:7,
+    ...typescale.bodySmall,
+    marginRight:10,
     paddingHorizontal:10,
     paddingVertical:3,
     borderRadius:200,

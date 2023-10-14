@@ -19,7 +19,7 @@ import { BackHandler } from 'react-native';
 const deviceHeight = Dimensions.get('window').height
 const deviceWidth = Dimensions.get('window').width
 
-export default function CustomPaperModal({ children, hideModal,modalstyle={},modalPage={}}) {
+export default function CustomPaperModal({ children, hideModal,modalstyle={},modalPage={},containerstyles={}}) {
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         setLoading(false)
@@ -60,7 +60,7 @@ export default function CustomPaperModal({ children, hideModal,modalstyle={},mod
     // });
     return (
 
-        <View style={{ ...styles.container }} >
+        <View style={{ ...styles.container,...containerstyles }} >
 
             <Pressable onPress={hideModal}
                 style={{ flex: 1, opacity: 0.2, }}
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
         right: 0,
         flexDirection: "column",
         backgroundColor: 'transparent',
-        marginBottom: 80,
-        justifyContent: "flex-end",
+         marginBottom: 80,
+        // justifyContent: "flex-end",
         // alignItems:"flex-start",
 
 
